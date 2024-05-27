@@ -1,3 +1,4 @@
+import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,11 +12,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Clear Home',
+      debugShowCheckedModeBanner: false,
+      routes: Routes.routes,
+      initialRoute: Routes.splash,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Placeholder(),
     );
   }
 }

@@ -1,10 +1,10 @@
-import 'dart:ui';
 
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
-class MyFonts{
-  static final kPoppinsRegular = GoogleFonts.poppins(fontWeight: FontWeight.w400);
-  static final kPoppinsMedium = GoogleFonts.poppins(fontWeight: FontWeight.w500);
-  static final kPoppinsSemiBold = GoogleFonts.poppins(fontWeight: FontWeight.w600);
-  static final kPoppinsBold = GoogleFonts.poppins(fontWeight: FontWeight.w700);
+class AppFonts{
+  static const TextStyle kPoppinsRegular = TextStyle(fontWeight: FontWeight.w400,  fontFamily: "Poppins");
+  static const TextStyle kPoppinsMedium = TextStyle(fontWeight: FontWeight.w500,  fontFamily: "Poppins");
+  static const TextStyle kPoppinsSemiBold = TextStyle(fontWeight: FontWeight.w600, fontFamily: "Poppins");
+  static const TextStyle kPoppinsBold = TextStyle(fontWeight: FontWeight.w700, fontFamily: "Poppins");
+
 }
