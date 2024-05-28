@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../constants/colors.dart';
-import '../constants/fonts.dart';
-import '../constants/strings.dart';
-import '../constants/validator.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_textfield.dart';
+import '../../constants/colors.dart';
+import '../../constants/fonts.dart';
+import '../../constants/strings.dart';
+import '../../constants/validator.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_textfield.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});

@@ -2,7 +2,7 @@ class AppStrings{
 
   static const String appName = "Clear Home";
   static const String iconPath = "assets/icons/";
-  static const String ImagePath = "assets/images/";
+  static const String imagePath = "assets/images/";
 
 
   static const String loginStr = "Login";
@@ -15,6 +15,7 @@ class AppStrings{
   static const String emailStr = "Email";
   static const String statusStr = "Status: ";
   static const String pendingStr = "Pending";
+  static const String familyMembersStr = "Family Members";
   static const String refreshStr = "Refresh";
   static const String verifyStr = "Verify";
   static const String mobileStr = "Mobile Number";
@@ -33,6 +34,15 @@ class AppStrings{
   static const String svgSmLogo = AppStrings.iconPath + "logo_sm.svg";
   static const String svgIconLogo = AppStrings.iconPath + "logo_icon.svg";
   static const String svgPending = AppStrings.iconPath + "pending.svg";
+  static const String svgHome = AppStrings.iconPath + "home.svg";
+  static const String svgTaskList = AppStrings.iconPath + "task_list.svg";
+  static const String svgCalendar = AppStrings.iconPath + "calendar.svg";
+  static const String svgChat = AppStrings.iconPath + "chat.svg";
+  static const String svgNotification = AppStrings.iconPath + "notification.svg";
+  static const String svgAccount = AppStrings.iconPath + "account.svg";
+  static const String svgFamily = AppStrings.iconPath + "family.svg";
+
+  static const String imgProfile = AppStrings.imagePath + "profile.png";
 
 
   // hints

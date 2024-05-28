@@ -4,9 +4,9 @@ import 'package:clear_home/widgets/custom_opt_view.dart';
 import 'package:clear_home/widgets/custom_richtext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../constants/colors.dart';
-import '../constants/strings.dart';
-import '../routes/routes.dart';
+import '../../constants/colors.dart';
+import '../../constants/strings.dart';
+import '../../routes/routes.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
