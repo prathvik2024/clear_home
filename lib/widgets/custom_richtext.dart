@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 class CustomRichText extends StatelessWidget {
 
   void Function()? onClick;
+  String firstText, secondText;
+  TextStyle? firstTextStyle, secondTextStyle;
 
-  CustomRichText({super.key, required this.onClick});
+  CustomRichText({super.key, required this.onClick, required this.firstText, required this.secondText, this.firstTextStyle, this.secondTextStyle});
 
   @override
   Widget build(BuildContext context) {
     return RichText(
         text: TextSpan(
-            text: "Don't have an account? ",
-            style: AppFonts.kPoppinsRegular.copyWith(color: AppColors.kLightBlack),
-            children: [TextSpan(text: "Sign up",recognizer: TapGestureRecognizer()..onTap = onClick, style: AppFonts.kPoppinsMedium.copyWith(color: AppColors.kDarkBlue))]));
+            text: firstText,
+            style: firstTextStyle != null ? firstTextStyle : AppFonts.kPoppinsRegular.copyWith(color: AppColors.kLightBlack),
+            children: [TextSpan(text: secondText,recognizer: TapGestureRecognizer()..onTap = onClick, style: secondTextStyle != null ? secondTextStyle : AppFonts.kPoppinsMedium.copyWith(color: AppColors.kDarkBlue))]));
   }
 }

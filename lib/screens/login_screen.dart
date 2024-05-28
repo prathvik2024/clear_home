@@ -25,14 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _loginFormKey = GlobalKey();
 
   String? validateEmail(input) {
-    if (!Validator().isEmail(input: input!.trim())) {
+    if (!Validator.isEmail(input: input!.trim())) {
       return AppStrings.emailError;
     }
     return null;
   }
 
   String? validatePassword(input) {
-    if (!Validator().isStrongPassword(input: input!.trim())) {
+    if (!Validator.isStrongPassword(input: input!.trim())) {
       return AppStrings.passwordError;
     }
     return null;
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void navigateRegister() => Navigator.pushNamed(context, Routes.register);
+  void navigateRegister() => Navigator.pushNamed(context, AppRoutes.register);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                           alignment: Alignment.topRight,
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () => Navigator.pushNamed(context, AppRoutes.forgotPassword),
                               child: Text(
                                 AppStrings.forgotPasswordStr,
                                 style: AppFonts.kPoppinsMedium.copyWith(
@@ -135,6 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.bottomCenter,
                           child: CustomRichText(
                             onClick: navigateRegister,
+                            firstText: AppStrings.dontAccountStr,
+                            secondText: AppStrings.signUpStr,
                           ))
                     ],
                   ),

@@ -42,12 +42,13 @@ class CustomTextField extends StatelessWidget {
           cursorColor: AppColors.kDarkBlue,
           cursorErrorColor: AppColors.kDarkBlue,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(40), borderSide: BorderSide(color: Colors.black12)),
               focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(40), borderSide: BorderSide(color: AppColors.kLightBlue)),
               prefixIcon: prefixIcon,
               hintText: hintText,
+              hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
               suffixIcon: suffixIcon != null
                   ? InkWell(
                       onTap: onTogglePassword,

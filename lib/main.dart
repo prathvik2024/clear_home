@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clear Home',
       debugShowCheckedModeBanner: false,
-      routes: Routes.routes,
-      initialRoute: Routes.splash,
+      routes: AppRoutes.routes,
+      initialRoute: AppRoutes.splash,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

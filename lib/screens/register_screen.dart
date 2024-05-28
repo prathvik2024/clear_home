@@ -30,28 +30,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> _registerFormKey = GlobalKey();
 
   String? validateEmail(input) {
-    if (!Validator().isEmail(input: input!.trim())) {
+    if (!Validator.isEmail(input: input!.trim())) {
       return AppStrings.emailError;
     }
     return null;
   }
 
   String? validateFullName(input) {
-    if (!Validator().isAlpha(input: input!.trim())) {
+    if (!Validator.isAlpha(input: input!.trim())) {
       return AppStrings.nameError;
     }
     return null;
   }
 
   String? validatePassword(input) {
-    if (!Validator().isStrongPassword(input: input!.trim())) {
+    if (!Validator.isStrongPassword(input: input!.trim())) {
       return AppStrings.passwordError;
     }
     return null;
   }
 
   String? validatePhone(input) {
-    if (!Validator().isPhone(input: input!.trim())) {
+    if (!Validator.isPhone(input: input!.trim())) {
       return AppStrings.phoneError;
     }
     return null;
@@ -66,11 +66,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void registerUser() {
     if (_registerFormKey.currentState!.validate()) {
-      navigateLogin();
+      Navigator.pushNamed(context, AppRoutes.verifyEmail);
     }
   }
 
-  void navigateLogin() => Navigator.pushNamed(context, Routes.login);
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +184,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Align(
                             alignment: Alignment.bottomCenter,
                             child: CustomRichText(
-                              onClick: navigateLogin,
+                              onClick: () => Navigator.pushReplacementNamed(context, AppRoutes.login),
+                              firstText: AppStrings.alreadyAccountStr,
+                              secondText: AppStrings.loginStr,
                             ))
                       ],
                     ),
