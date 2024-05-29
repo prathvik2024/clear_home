@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/fonts.dart';
+import 'package:clear_home/widgets/home_widgets/circular_image.dart';
 import 'package:clear_home/widgets/home_widgets/family_card_view.dart';
 import 'package:clear_home/widgets/home_widgets/recent_list_card_view.dart';
 import 'package:flutter/material.dart';
@@ -71,24 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 20, left: 21, right: 21),
         child: Row(
           children: [
-            Container(
-                width: 50,
-                height: 50,
-                padding: EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 2)]),
-                child: ClipRRect(
-                    child: InkWell(
-                      onTap: (){
-                        Scaffold.of(context).openDrawer();
-                      },
-                      child: Image.asset(
-                        AppStrings.imgProfile,
-                      ),
-                    ),
-                    borderRadius: BorderRadius.circular(25))),
+            CircularImage(imageWidget: Image.asset(AppStrings.imgProfile, fit: BoxFit.cover,), onclick: (){
+              Scaffold.of(context).openDrawer();
+            },),
             Spacer(),
             IconButton(
                 onPressed: () {},

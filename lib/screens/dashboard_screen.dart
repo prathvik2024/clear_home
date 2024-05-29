@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:clear_home/models/drawer_model.dart';
+import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/strings.dart';
@@ -81,223 +81,288 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: SafeArea(
-          child: Drawer(
-        width: width * 0.85,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: width,
-              height: height * 0.20,
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.only(left: 25, right: 10, bottom: 0),
-              color: AppColors.kDrawerTopBg,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          size: 24,
-                          color: Colors.white,
-                        )),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                          width: 80,
-                          height: 80,
-                          padding: EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(40),
-                              boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 4)]),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                  child: Image.asset(
-                                    AppStrings.imgProfile,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: BorderRadius.circular(40)),
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                child: Container(
-                                  width: 28,
-                                  height: 28,
-                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: AppColors.kDarkBlue,
-                                    size: 18,
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
-                      SizedBox(
-                        width: 25,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "David Smith",
-                            style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.white),
-                          ),
-                          Text(
-                            "davidsmith@gmail.com",
-                            style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              color: Colors.white.withOpacity(0.15),
-              height: 0.3,
-            ),
-            Expanded(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
               child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          AppStrings.svgIconLogo,
+                          width: 42,
+                          height: 42,
+                          color: AppColors.kDarkBlue,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Exit App",
+                          style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Are you sure to want to exit app?",
+                      style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              "NO",
+                              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
+                            )),
+                        TextButton(
+                            onPressed: () => SystemNavigator.pop(),
+                            child: Text(
+                              "YES",
+                              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: AppColors.kDarkBlue),
+                            )),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: SafeArea(
+            child: Drawer(
+          width: width * 0.85,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
                 width: width,
-                color: AppColors.kLiteBlue,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            leading: SvgPicture.asset(
-                              drawerList[index].icon,
-                              color: Colors.white,
-                            ),
-                            title: Text(
-                              drawerList[index].title,
+                height: height * 0.20,
+                margin: EdgeInsets.all(0),
+                padding: EdgeInsets.only(left: 25, right: 10, bottom: 0),
+                color: AppColors.kDrawerTopBg,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            size: 24,
+                            color: Colors.white,
+                          )),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            width: 80,
+                            height: 80,
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                                boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 4)]),
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                    child: Image.asset(
+                                      AppStrings.imgProfile,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40)),
+                                Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: Container(
+                                    width: 28,
+                                    height: 28,
+                                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),
+                                    child: Icon(
+                                      Icons.camera_alt_outlined,
+                                      color: AppColors.kDarkBlue,
+                                      size: 18,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                        SizedBox(
+                          width: 25,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "David Smith",
                               style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.white),
                             ),
-                            trailing: (drawerList[index].child != null)
-                                ? IconButton(
-                                    onPressed: () {
-                                      drawerList[index].isExpanded = !drawerList[index].isExpanded;
-                                      setState(() {});
-                                    },
-                                    icon: SvgPicture.asset((drawerList[index].isExpanded ? AppStrings.svgUpArrow : AppStrings.svgDownArrow)))
-                                : null,
-                            contentPadding: EdgeInsets.all(0),
-                          ),
-                          Visibility(
-                              visible: drawerList[index].isExpanded,
-                              child: Container(
-                                margin: EdgeInsets.only(left: 25),
-                                child: Column(
-                                  children: List.generate(
-                                    drawerList[index].child?.length ?? 0,
-                                    (i) {
-                                      return ListTile(
-                                        contentPadding: EdgeInsets.zero,
-                                        dense: true,
-                                        visualDensity: VisualDensity(vertical: -4) ,
-                                        leading: SvgPicture.asset(drawerList[index].child?[i].icon ?? ""),
-                                        title: Text(
-                                          drawerList[index].child?[i].title ?? "",
-                                          style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.white),
-                                        ),
-                                      );
-                                    },
+                            Text(
+                              "davidsmith@gmail.com",
+                              style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Colors.white.withOpacity(0.15),
+                height: 0.3,
+              ),
+              Expanded(
+                child: Container(
+                  width: width,
+                  color: AppColors.kLiteBlue,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: SvgPicture.asset(
+                                drawerList[index].icon,
+                                color: Colors.white,
+                              ),
+                              title: Text(
+                                drawerList[index].title,
+                                style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.white),
+                              ),
+                              trailing: (drawerList[index].child != null)
+                                  ? IconButton(
+                                      onPressed: () {
+                                        drawerList[index].isExpanded = !drawerList[index].isExpanded;
+                                        setState(() {});
+                                      },
+                                      icon: SvgPicture.asset((drawerList[index].isExpanded ? AppStrings.svgUpArrow : AppStrings.svgDownArrow)))
+                                  : null,
+                              contentPadding: EdgeInsets.all(0),
+                            ),
+                            Visibility(
+                                visible: drawerList[index].isExpanded,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 25),
+                                  child: Column(
+                                    children: List.generate(
+                                      drawerList[index].child?.length ?? 0,
+                                      (i) {
+                                        return ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          dense: true,
+                                          visualDensity: VisualDensity(vertical: -4),
+                                          leading: SvgPicture.asset(drawerList[index].child?[i].icon ?? ""),
+                                          title: Text(
+                                            drawerList[index].child?[i].title ?? "",
+                                            style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.white),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
+                                ))
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                            height: 1,
+                            color: Colors.white.withOpacity(0.15),
+                          ),
+                      itemCount: drawerList.length),
+                ),
+              )
+            ],
+          ),
+        )),
+        backgroundColor: AppColors.kHomeBg,
+        body: SafeArea(
+          child: Container(
+            width: width,
+            height: height,
+            child: Builder(
+              builder: (context) {
+                switch (selectedPage) {
+                  case 0:
+                    return HomeScreen();
+                  case 1:
+                    return TaskListScreen();
+                  case 2:
+                    return CalendarScreen();
+                  case 3:
+                    return ChatScreen();
+                  default:
+                    return Container();
+                }
+              },
+            ),
+          ),
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(right: 6.0),
+          child: FloatingActionButton(
+            backgroundColor: AppColors.kDarkBlue,
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 34,
+            ),
+            onPressed: () =>Navigator.pushNamed(context, AppRoutes.addMembers),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          width: width,
+          margin: EdgeInsets.only(left: 21, right: 21, bottom: 30),
+          height: 70,
+          child: Card(
+            elevation: 5,
+            color: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: bottomMenuList.map((item) {
+                  return IconButton(
+                      onPressed: item["onclick"],
+                      icon: SvgPicture.asset(
+                        item["icon"],
+                        width: 28,
+                        height: 28,
+                        color: ((selectedPage == bottomMenuList.indexOf(item)) ? AppColors.kDarkBlue : Colors.grey),
+                      ),
+                      style: (selectedPage == bottomMenuList.indexOf(item))
+                          ? IconButton.styleFrom(
+                              elevation: 15,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                side: BorderSide(
+                                  color: AppColors.kHomeBg,
+                                  width: 4,
                                 ),
                               ))
-                        ],
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(
-                          height: 1,
-                          color: Colors.white.withOpacity(0.15),
-                        ),
-                    itemCount: drawerList.length),
-              ),
-            )
-          ],
-        ),
-      )),
-      backgroundColor: AppColors.kHomeBg,
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          child: Builder(
-            builder: (context) {
-              switch (selectedPage) {
-                case 0:
-                  return HomeScreen();
-                case 1:
-                  return TaskListScreen();
-                case 2:
-                  return CalendarScreen();
-                case 3:
-                  return ChatScreen();
-                default:
-                  return Container();
-              }
-            },
+                          : null);
+                }).toList()),
           ),
-        ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 6.0),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.kDarkBlue,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 34,
-          ),
-          onPressed: () {},
-        ),
-      ),
-      bottomNavigationBar: Container(
-        width: width,
-        margin: EdgeInsets.only(left: 21, right: 21, bottom: 30),
-        height: 70,
-        child: Card(
-          elevation: 5,
-          color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: bottomMenuList.map((item) {
-                return IconButton(
-                    onPressed: item["onclick"],
-                    icon: SvgPicture.asset(
-                      item["icon"],
-                      width: 28,
-                      height: 28,
-                      color: ((selectedPage == bottomMenuList.indexOf(item)) ? AppColors.kDarkBlue : Colors.grey),
-                    ),
-                    style: (selectedPage == bottomMenuList.indexOf(item))
-                        ? IconButton.styleFrom(
-                            elevation: 15,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              side: BorderSide(
-                                color: AppColors.kHomeBg,
-                                width: 4,
-                              ),
-                            ))
-                        : null);
-              }).toList()),
         ),
       ),
     );

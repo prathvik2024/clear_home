@@ -14,6 +14,10 @@ class AppStrings{
   static const String saveStr = "Save";
   static const String signUpStr = "Sign Up";
   static const String nameStr = "Full Name";
+  static const String addMembersStr = "Add Members";
+  static const String familyMemberListStr = "Family Members List";
+  static const String memberNameStr = "Member Name";
+  static const String relationStr = "Brother";
   static const String emailStr = "Email";
   static const String statusStr = "Status: ";
   static const String pendingStr = "Pending";
@@ -63,6 +67,7 @@ class AppStrings{
   static const String hintEmail = "johndeo@gmail.com";
   static const String hintPhone = "1234567890";
   static const String hintName = "john deo";
+  static const String hintRelation = "Brother";
   static const String hintPassword = "********";
 
 
@@ -70,6 +75,7 @@ class AppStrings{
   static const String emailError = "Please enter valid email!";
   static const String passwordError = "Please enter valid password!";
   static const String nameError = "Please enter valid name!";
+  static const String relationError = "Please enter valid relation!";
   static const String phoneError = "Please enter valid phone number!";
   static const String confirmPasswordError = "Confirm Password can't match!";
 

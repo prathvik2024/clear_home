@@ -1,4 +1,5 @@
 import 'package:clear_home/constants/fonts.dart';
+import 'package:clear_home/widgets/home_widgets/circular_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/strings.dart';
@@ -26,15 +27,7 @@ class FamilyCardView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                    width: 50,
-                    height: 50,
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 2)]),
-                    child: ClipRRect(child: Image.network(familyCardList[index].profileImage, fit: BoxFit.cover,), borderRadius: BorderRadius.circular(25))),
+                CircularImage(imageWidget: Image.network(familyCardList[index].profileImage, fit: BoxFit.cover,)),
                 SizedBox(
                   height: 10,
                 ),
