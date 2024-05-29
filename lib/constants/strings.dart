@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class AppStrings{
 
   static const String appName = "Clear Home";
@@ -46,6 +48,13 @@ class AppStrings{
   static const String svgLunch = AppStrings.iconPath + "lunch.svg";
   static const String svgShoppingBasket = AppStrings.iconPath + "shopping-basket.svg";
   static const String svgTravel = AppStrings.iconPath + "travel_checklist.svg";
+  static const String svgCategory = AppStrings.iconPath + "category.svg";
+  static const String svgDigitalAddressBook = AppStrings.iconPath + "ph_address_book.svg";
+  static const String svgSettings = AppStrings.iconPath + "settings.svg";
+  static const String svgLogout = AppStrings.iconPath + "logout.svg";
+  static const String svgDownArrow = AppStrings.iconPath + "down_arrow.svg";
+  static const String svgUpArrow = AppStrings.iconPath + "up_arrow.svg";
+  static const String svgDot = AppStrings.iconPath + "dot.svg";
 
   static const String imgProfile = AppStrings.imagePath + "profile.png";
 

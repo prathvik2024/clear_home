@@ -64,6 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
       Padding(
         padding: const EdgeInsets.only(top: 20, left: 21, right: 21),
@@ -78,8 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 2)]),
                 child: ClipRRect(
-                    child: Image.asset(
-                      AppStrings.imgProfile,
+                    child: InkWell(
+                      onTap: (){
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: Image.asset(
+                        AppStrings.imgProfile,
+                      ),
                     ),
                     borderRadius: BorderRadius.circular(25))),
             Spacer(),
@@ -101,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),SizedBox(height: 10,),
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.73,
+        height: height * 0.73,
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
@@ -117,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 10),
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.26,
+                  height: height * 0.26,
                   child: FamilyCardView(
                     familyCardList: familyCardList,
                   )),

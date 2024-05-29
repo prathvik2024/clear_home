@@ -11,6 +11,8 @@ class FamilyCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -19,7 +21,7 @@ class FamilyCardView extends StatelessWidget {
           margin: EdgeInsets.only(right: 15, left: (index == familyCardList.indexOf(familyCardList.first)) ? 21 : 0),
           color: familyCardList[index].color,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.43,
+            width: width * 0.43,
             padding: EdgeInsets.only(top: 20, left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
