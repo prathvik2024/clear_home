@@ -75,10 +75,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.kDarkBlue,
-        child: Icon(Icons.add, color: Colors.white,size: 34,),
-        onPressed: () {},
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 6.0),
+        child: FloatingActionButton(
+          backgroundColor: AppColors.kDarkBlue,
+          child: Icon(Icons.add, color: Colors.white,size: 34,),
+          onPressed: () {},
+        ),
       ),
       bottomNavigationBar: Container(
         width: MediaQuery.of(context).size.width,

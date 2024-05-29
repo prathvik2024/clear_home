@@ -12,12 +12,14 @@ class FamilyCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Card(
-          margin: EdgeInsets.only(right: (index == familyCardList.first) ? 15 : 0),
+          margin: EdgeInsets.only(right: 15, left: (index == familyCardList.indexOf(familyCardList.first)) ? 21 : 0),
           color: familyCardList[index].color,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.45,
+            width: MediaQuery.of(context).size.width * 0.43,
             padding: EdgeInsets.only(top: 20, left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +32,7 @@ class FamilyCardView extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(25),
                         boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.12), spreadRadius: 2)]),
-                    child: ClipRRect(child: Image.network(familyCardList[index].profileImage), borderRadius: BorderRadius.circular(25))),
+                    child: ClipRRect(child: Image.network(familyCardList[index].profileImage, fit: BoxFit.cover,), borderRadius: BorderRadius.circular(25))),
                 SizedBox(
                   height: 10,
                 ),

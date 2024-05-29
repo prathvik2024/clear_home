@@ -16,7 +16,9 @@ class AppStrings{
   static const String statusStr = "Status: ";
   static const String pendingStr = "Pending";
   static const String familyMembersStr = "Family Members";
+  static const String recentTaskStr = "Recent Tasks";
   static const String refreshStr = "Refresh";
+  static const String seeAllStr = "See all";
   static const String verifyStr = "Verify";
   static const String mobileStr = "Mobile Number";
   static const String newPasswordStr = "New Password";
@@ -41,6 +43,9 @@ class AppStrings{
   static const String svgNotification = AppStrings.iconPath + "notification.svg";
   static const String svgAccount = AppStrings.iconPath + "account.svg";
   static const String svgFamily = AppStrings.iconPath + "family.svg";
+  static const String svgLunch = AppStrings.iconPath + "lunch.svg";
+  static const String svgShoppingBasket = AppStrings.iconPath + "shopping-basket.svg";
+  static const String svgTravel = AppStrings.iconPath + "travel_checklist.svg";
 
   static const String imgProfile = AppStrings.imagePath + "profile.png";
 
