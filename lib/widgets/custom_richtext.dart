@@ -9,7 +9,7 @@ class CustomRichText extends StatelessWidget {
   String firstText, secondText;
   TextStyle? firstTextStyle, secondTextStyle;
 
-  CustomRichText({super.key, required this.onClick, required this.firstText, required this.secondText, this.firstTextStyle, this.secondTextStyle});
+  CustomRichText({super.key, this.onClick, required this.firstText, required this.secondText, this.firstTextStyle, this.secondTextStyle});
 
   @override
   Widget build(BuildContext context) {

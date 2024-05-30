@@ -9,6 +9,8 @@ import 'package:clear_home/screens/bottom_nav/calendar_screen.dart';
 import 'package:clear_home/screens/bottom_nav/chat_screen.dart';
 import 'package:clear_home/screens/bottom_nav/task_list_screen.dart';
 import '../constants/fonts.dart';
+import '../widgets/custom_dialog.dart';
+import '../widgets/show_toast.dart';
 import 'bottom_nav/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -87,78 +89,84 @@ class _DashboardScreenState extends State<DashboardScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            return Dialog(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          AppStrings.svgIconLogo,
-                          width: 42,
-                          height: 42,
-                          color: AppColors.kDarkBlue,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Exit App",
-                          style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Are you sure to want to exit app?",
-                      style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text(
-                              "NO",
-                              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
-                            )),
-                        TextButton(
-                            onPressed: () => SystemNavigator.pop(),
-                            child: Text(
-                              "YES",
-                              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: AppColors.kDarkBlue),
-                            )),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+            // return Dialog(
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            //     child: Column(
+            //       mainAxisSize: MainAxisSize.min,
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Row(
+            //           children: [
+            //             SvgPicture.asset(
+            //               AppStrings.svgIconLogo,
+            //               width: 42,
+            //               height: 42,
+            //               color: AppColors.kDarkBlue,
+            //             ),
+            //             SizedBox(
+            //               width: 10,
+            //             ),
+            //             Text(
+            //               "Exit App",
+            //               style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 20),
+            //             ),
+            //           ],
+            //         ),
+            //         SizedBox(
+            //           height: 20,
+            //         ),
+            //         Text(
+            //           "Are you sure to want to exit app?",
+            //           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
+            //         ),
+            //         SizedBox(
+            //           height: 20,
+            //         ),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.end,
+            //           children: [
+            //             TextButton(
+            //                 onPressed: () => Navigator.pop(context),
+            //                 child: Text(
+            //                   "NO",
+            //                   style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
+            //                 )),
+            //             TextButton(
+            //                 onPressed: () => SystemNavigator.pop(),
+            //                 child: Text(
+            //                   "YES",
+            //                   style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: AppColors.kDarkBlue),
+            //                 )),
+            //           ],
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // );
+            return CustomDialog(
+              title: AppStrings.exitAppStr,
+              negativeOnclick: () => Navigator.pop(context),
+              positiveOnclick: () => SystemNavigator.pop(),
+              negativeButtonName: AppStrings.noButtonStr,
+              positiveButtonName: AppStrings.yesButtonStr,
             );
           },
         );
       },
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: SafeArea(
-            child: Drawer(
+        drawer: Drawer(
           width: width * 0.85,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: width,
-                height: height * 0.20,
+                height: height * 0.25,
                 margin: EdgeInsets.all(0),
-                padding: EdgeInsets.only(left: 25, right: 10, bottom: 0),
+                padding: EdgeInsets.only(left: 25, right: 10, bottom: 0, top: 30),
                 color: AppColors.kDrawerTopBg,
                 child: Column(
                   children: [
@@ -166,7 +174,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       alignment: Alignment.topRight,
                       child: IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            _scaffoldKey.currentState!.closeDrawer();
                           },
                           icon: Icon(
                             Icons.close,
@@ -237,7 +245,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Container(
                   width: width,
                   color: AppColors.kLiteBlue,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         return Column(
@@ -295,7 +303,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               )
             ],
           ),
-        )),
+        ),
         backgroundColor: AppColors.kHomeBg,
         body: SafeArea(
           child: Container(
@@ -305,7 +313,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               builder: (context) {
                 switch (selectedPage) {
                   case 0:
-                    return HomeScreen();
+                    return HomeScreen(
+                      scaffoldKey: _scaffoldKey,
+                    );
                   case 1:
                     return TaskListScreen();
                   case 2:
@@ -328,7 +338,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: Colors.white,
               size: 34,
             ),
-            onPressed: () =>Navigator.pushNamed(context, AppRoutes.addMembers),
+            onPressed: () => Navigator.pushNamed(context, AppRoutes.addMembers),
           ),
         ),
         bottomNavigationBar: Container(

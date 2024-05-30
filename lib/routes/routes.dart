@@ -6,6 +6,7 @@ import 'package:clear_home/screens/auth_module/login_screen.dart';
 import 'package:clear_home/screens/auth_module/new_password_screen.dart';
 import 'package:clear_home/screens/auth_module/otp_verification_screen.dart';
 import 'package:clear_home/screens/auth_module/register_screen.dart';
+import 'package:clear_home/screens/family_member_details_screen.dart';
 import 'package:clear_home/screens/family_member_list_screen.dart';
 import 'package:clear_home/screens/splash_screen.dart';
 import 'package:clear_home/screens/auth_module/verify_email_screen.dart';
@@ -22,6 +23,7 @@ class AppRoutes{
   static const String dashboard  = "/dashboard";
   static const String addMembers  = "/addMembers";
   static const String familyMemberList  = "/familyMemberList";
+  static const String familyMemberDetails  = "/familyMemberDetailsScreen";
 
 
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -35,5 +37,6 @@ class AppRoutes{
     dashboard: (context) => DashboardScreen(),
     addMembers: (context) => AddMembersScreen(),
     familyMemberList: (context) => FamilyMemberListScreen(),
+    familyMemberDetails: (context) => FamilyMemberDetailsScreen(),
   };
 }

@@ -13,7 +13,9 @@ import '../../models/family_card_model.dart';
 import '../../models/recent_task_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  HomeScreen({super.key, required this.scaffoldKey});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -74,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             CircularImage(imageWidget: Image.asset(AppStrings.imgProfile, fit: BoxFit.cover,), onclick: (){
               Scaffold.of(context).openDrawer();
+              widget.scaffoldKey.currentState!.openDrawer();
             },),
             Spacer(),
             IconButton(
