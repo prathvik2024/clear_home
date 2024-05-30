@@ -65,20 +65,19 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> w
                   labelPadding: EdgeInsets.zero,
                   tabs: [
                     Tab(
-                        child: Container(
-                      width: width * 50,
-                      child: Text(
-                        AppStrings.profileStr,
-                        textAlign: TextAlign.center,
-                      ),
-                    )),
-                    Tab(
                       child: Container(
                         width: width * 50,
                         child: Text(
+                              AppStrings.profileStr,
+                              textAlign: TextAlign.center,),
+                      )
+                    ),
+                    Tab(
+                      child:  Container(
+                        width: width * 50,
+                        child: Text(
                           AppStrings.taskStr,
-                          textAlign: TextAlign.center,
-                        ),
+                          textAlign: TextAlign.center,),
                       ),
                     ),
                   ],
@@ -90,7 +89,7 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> w
                       color: AppColors.kLiteBlue,
                       boxShadow: [BoxShadow(color: AppColors.kLiteBlue.withOpacity(0.3), spreadRadius: 1, blurRadius: 2)],
                       borderRadius: BorderRadius.circular(40)),
-                  onTap: (index) {
+                  onTap: (index){
                     selectedTabIndex = index;
                     _pageController?.jumpToPage(index);
                   },

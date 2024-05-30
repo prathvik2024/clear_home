@@ -1,6 +1,5 @@
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/fonts.dart';
-import 'package:clear_home/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,14 +7,16 @@ import '../../models/recent_task_model.dart';
 
 class RecentListCardView extends StatelessWidget {
   List<RecentTaskModel> recentTaskList = [];
+  bool shrinkWrap;
+  ScrollPhysics? physics;
 
-  RecentListCardView({super.key, required this.recentTaskList});
+  RecentListCardView({super.key, required this.recentTaskList, this.shrinkWrap = false, this.physics});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: shrinkWrap,
+      physics: physics ?? BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         return Card(

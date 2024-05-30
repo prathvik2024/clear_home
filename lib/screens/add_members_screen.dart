@@ -12,13 +12,15 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_appbar.dart';
 
 class AddMembersScreen extends StatefulWidget {
-  const AddMembersScreen({super.key});
+  AddMembersScreen({super.key});
 
   @override
   State<AddMembersScreen> createState() => _AddMembersScreenState();
 }
 
 class _AddMembersScreenState extends State<AddMembersScreen> {
+  Map<String, dynamic>? args;
+
   TextEditingController memberNameController = TextEditingController();
   TextEditingController relationController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
@@ -26,18 +28,31 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
-  void validateAddMembers() {
+  void validateAddMembers() async {
     // if (_formKey.currentState!.validate()) {
     //   ShowToast(msg: "Add Member Successfully");
-      Navigator.pushNamed(context, AppRoutes.familyMemberList);
+
+    args = await Navigator.pushNamed(context, AppRoutes.familyMemberList) as Map<String, dynamic>;
+    setState(() {});
     // }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+    //   widget.args = ModalRoute.of(context)?.settings.arguments as Map<String, bool>;
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
-      appBar: CustomAppbar(screenName: AppStrings.addMembersStr,),
+      appBar: CustomAppbar(
+        screenName: (args?["isEdit"] ?? false) ? AppStrings.editMemberDetailsStr : AppStrings.addMembersStr,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 21, right: 21, top: 25),
@@ -81,7 +96,7 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
                 SizedBox(
                   height: 60,
                 ),
-                CustomButton(label: "Invite / Add", onClick: validateAddMembers)
+                CustomButton(label: (args?["isEdit"] ?? false) ? AppStrings.saveStr : AppStrings.addMemberBtnStr, onClick: validateAddMembers)
               ],
             ),
           ),

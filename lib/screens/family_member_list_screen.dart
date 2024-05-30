@@ -3,7 +3,6 @@ import 'package:clear_home/routes/routes.dart';
 import 'package:clear_home/widgets/custom_appbar.dart';
 import 'package:clear_home/widgets/custom_dialog.dart';
 import 'package:clear_home/widgets/home_widgets/circular_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
@@ -39,7 +38,9 @@ class _FamilyMemberListScreenState extends State<FamilyMemberListScreen> {
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
       appBar: CustomAppbar(
+        backClick: () => Navigator.pop(context, {"": null}),
         screenName: AppStrings.familyMemberListStr,
+
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -61,7 +62,7 @@ class _FamilyMemberListScreenState extends State<FamilyMemberListScreen> {
                     children: [
                       CircularImage(
                           imageWidget: Image.network(
-                            familyMemberList[index].image,
+                        familyMemberList[index].image,
                         fit: BoxFit.cover,
                       )),
                       SizedBox(
@@ -75,36 +76,50 @@ class _FamilyMemberListScreenState extends State<FamilyMemberListScreen> {
                         ),
                       ),
                       Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => CustomDialog(
-                              title: AppStrings.deleteFamilyMemberStr,
-                              negativeOnclick: () {
-                                Navigator.pop(context);
-                              },
-                              positiveOnclick: () {
-                                Navigator.pop(context);
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      Future.delayed(Duration(seconds: 3), () => Navigator.pop(context));
-                                      return CustomDialog(
-                                        lottie: AppStrings.lottieDelete,
-                                        title: AppStrings.deleteSuccessfullyStr,
-                                      );
-                                    });
-                              },
-                              negativeButtonName: AppStrings.noButtonStr,
-                              positiveButtonName: AppStrings.yesButtonStr,
+                      PopupMenuButton(
+                        color: Colors.white,
+                        iconColor: AppColors.kDarkBlue,
+                        itemBuilder: (context) {
+                          return const [
+                            PopupMenuItem(
+                              child: Text("Edit"),
+                              value: "0",
                             ),
-                          );
+                            PopupMenuItem(
+                              child: Text("Delete"),
+                              value: "1",
+                            ),
+                          ];
                         },
-                        icon: Icon(
-                          CupertinoIcons.ellipsis_vertical,
-                          color: AppColors.kDarkBlue,
-                        ),
+                        onSelected: (value) {
+                          if (value == "0") {
+                            Navigator.pop(context, {"isEdit": true});
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => CustomDialog(
+                                title: AppStrings.deleteFamilyMemberStr,
+                                negativeOnclick: () {
+                                  Navigator.pop(context);
+                                },
+                                positiveOnclick: () {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        Future.delayed(Duration(seconds: 3), () => Navigator.pop(context));
+                                        return CustomDialog(
+                                          lottie: AppStrings.lottieDelete,
+                                          title: AppStrings.deleteSuccessfullyStr,
+                                        );
+                                      });
+                                },
+                                negativeButtonName: AppStrings.noButtonStr,
+                                positiveButtonName: AppStrings.yesButtonStr,
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),

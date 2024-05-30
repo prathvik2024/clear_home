@@ -74,10 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(top: 20, left: 21, right: 21),
         child: Row(
           children: [
-            CircularImage(imageWidget: Image.asset(AppStrings.imgProfile, fit: BoxFit.cover,), onclick: (){
-              Scaffold.of(context).openDrawer();
-              widget.scaffoldKey.currentState!.openDrawer();
-            },),
+            CircularImage(
+              imageWidget: Image.asset(
+                AppStrings.imgProfile,
+                fit: BoxFit.cover,
+              ),
+              onclick: () {
+                Scaffold.of(context).openDrawer();
+                widget.scaffoldKey.currentState!.openDrawer();
+              },
+            ),
             Spacer(),
             IconButton(
                 onPressed: () {},
@@ -95,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
           ],
         ),
-      ),SizedBox(height: 10,),
+      ),
+      SizedBox(
+        height: 10,
+      ),
       SizedBox(
         height: height * 0.73,
         child: SingleChildScrollView(
@@ -143,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 21),
-                child: RecentListCardView(recentTaskList: recentTaskList),
+                child: RecentListCardView(recentTaskList: recentTaskList, physics: NeverScrollableScrollPhysics(),shrinkWrap: true,),
               )
             ],
           ),

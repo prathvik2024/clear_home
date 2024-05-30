@@ -14,9 +14,14 @@ class AppStrings{
   static const String noButtonStr = "No";
   static const String yesButtonStr = "Yes";
   static const String signUpStr = "Sign Up";
+  static const String todayStr = "Today";
+  static const String upcommingStr = "Upcoming";
+  static const String pastStr = "Past";
   static const String nameStr = "Full Name";
   static const String addMembersStr = "Add Members";
+  static const String editMemberDetailsStr = "Edit Family Member Details";
   static const String familyMemberListStr = "Family Members List";
+  static const String addMemberBtnStr = "Invite / Add";
   static const String memberNameStr = "Member Name";
   static const String memberNameTagStr = "Member Name: ";
   static const String relationStr = "Relation";
