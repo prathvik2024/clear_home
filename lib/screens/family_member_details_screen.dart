@@ -13,13 +13,29 @@ class FamilyMemberDetailsScreen extends StatefulWidget {
   State<FamilyMemberDetailsScreen> createState() => _FamilyMemberDetailsScreenState();
 }
 
-class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> {
+class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
   int selectedTabIndex = 0;
   Map<String, String>? args;
   PageController? _pageController;
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     _pageController = PageController(
       initialPage: selectedTabIndex,
@@ -43,64 +59,41 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: InkWell(
-                      borderRadius: BorderRadius.circular(40),
-                      onTap: () {
-                        selectedTabIndex = 0;
-                        _pageController?.jumpToPage(0);
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        decoration: (selectedTabIndex == 0)
-                            ? BoxDecoration(
-                                color: AppColors.kLiteBlue,
-                                boxShadow: [BoxShadow(color: AppColors.kLiteBlue.withOpacity(0.3), spreadRadius: 1, blurRadius: 2)],
-                                borderRadius: BorderRadius.circular(40))
-                            : null,
-                        child: Text(
-                          AppStrings.profileStr,
-                          textAlign: TextAlign.center,
-                          style: (selectedTabIndex == 0)
-                              ? AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white)
-                              : AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
-                        ),
+                child: TabBar(
+                  padding: EdgeInsets.zero,
+                  controller: _tabController,
+                  labelPadding: EdgeInsets.zero,
+                  tabs: [
+                    Tab(
+                        child: Container(
+                      width: width * 50,
+                      child: Text(
+                        AppStrings.profileStr,
+                        textAlign: TextAlign.center,
                       ),
                     )),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                        child: InkWell(
-                      borderRadius: BorderRadius.circular(40),
-                      onTap: () {
-                        selectedTabIndex = 1;
-                        _pageController?.jumpToPage(1);
-                        setState(() {});
-                      },
+                    Tab(
                       child: Container(
-                        decoration: (selectedTabIndex == 1)
-                            ? BoxDecoration(
-                                color: AppColors.kLiteBlue,
-                                boxShadow: [BoxShadow(color: AppColors.kLiteBlue.withOpacity(0.3), spreadRadius: 1, blurRadius: 2)],
-                                borderRadius: BorderRadius.circular(40))
-                            : null,
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        width: width * 50,
                         child: Text(
                           AppStrings.taskStr,
                           textAlign: TextAlign.center,
-                          style: (selectedTabIndex == 1)
-                              ? AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white)
-                              : AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
                         ),
                       ),
-                    )),
+                    ),
                   ],
+                  physics: BouncingScrollPhysics(),
+                  dividerHeight: 0,
+                  labelStyle: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
+                  unselectedLabelStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
+                  indicator: BoxDecoration(
+                      color: AppColors.kLiteBlue,
+                      boxShadow: [BoxShadow(color: AppColors.kLiteBlue.withOpacity(0.3), spreadRadius: 1, blurRadius: 2)],
+                      borderRadius: BorderRadius.circular(40)),
+                  onTap: (index) {
+                    selectedTabIndex = index;
+                    _pageController?.jumpToPage(index);
+                  },
                 ),
               ),
             ),
@@ -111,6 +104,7 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> {
               controller: _pageController,
               onPageChanged: (num) {
                 selectedTabIndex = num;
+                _tabController.index = num;
                 setState(() {});
               },
               children: [
