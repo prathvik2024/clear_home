@@ -37,6 +37,9 @@ class AppStrings{
   static const String verifyStr = "Verify";
   static const String profileStr = "Profile";
   static const String taskStr = "Task";
+  static const String startDateHintStr = "31-05-2024";
+  static const String startStr = "Start";
+  static const String endStr = "End";
   static const String mobileStr = "Mobile Number";
   static const String mobileTagStr = "Mobile Number: ";
   static const String newPasswordStr = "New Password";
@@ -46,6 +49,14 @@ class AppStrings{
   static const String alreadyAccountStr = "Already have an account? ";
   static const String passwordStr = "Password";
   static const String taskListStr = "Task List";
+  static const String taskNameStr = "Task Name";
+  static const String taskDateStr = "Task Date";
+  static const String taskDescStr = "Task Description";
+  static const String taskTimeStr = "Task Time";
+  static const String taskStartTimeStr = "10:00 AM";
+  static const String taskEndTimeStr = "06:00 AM";
+  static const String buyGroceriesStr = "Buy Groceries";
+  static const String createGeneralStr = "Create General Task";
   static const String forgotPasswordStr = "Forgot Password?";
   static const String verificationStr = "Verification";
   static const String otpVerificationStr = "OTP Verification";
