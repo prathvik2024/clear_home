@@ -4,9 +4,9 @@ import 'package:clear_home/widgets/custom_appbar.dart';
 import 'package:clear_home/widgets/custom_dialog.dart';
 import 'package:clear_home/widgets/home_widgets/circular_image.dart';
 import 'package:flutter/material.dart';
-import '../constants/colors.dart';
-import '../constants/strings.dart';
-import '../models/family_member_model.dart';
+import '../../constants/colors.dart';
+import '../../constants/strings.dart';
+import '../../models/family_member_model.dart';
 
 class FamilyMemberListScreen extends StatefulWidget {
   const FamilyMemberListScreen({super.key});

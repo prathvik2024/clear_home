@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../constants/fonts.dart';
-import '../constants/strings.dart';
-import '../widgets/home_widgets/circular_image.dart';
+import '../../constants/fonts.dart';
+import '../../constants/strings.dart';
+import '../../widgets/home_widgets/circular_image.dart';
 
 class FamilyMemberProfileScreen extends StatelessWidget {
-  Map<String, String>? args;
+  Map<String, dynamic>? args;
 
-  FamilyMemberProfileScreen({super.key, required this.args});
+  FamilyMemberProfileScreen({super.key, this.args});
 
   List<String> columnList = [AppStrings.memberNameTagStr, AppStrings.relationTagStr, AppStrings.mobileTagStr, AppStrings.emailTagStr];
 
@@ -37,13 +37,13 @@ class FamilyMemberProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CircularImage(
-                        imageWidget: (args != null)
+                        imageWidget: (args?["image"] != null) // if(args != null && args["image"] != null)
                             ? Image.network(
                                 args!["image"]!,
                                 fit: BoxFit.cover,
                               )
-                            : SvgPicture.asset(
-                                AppStrings.svgImageNotFound,
+                            : Image.asset(
+                                AppStrings.imgProfile,
                                 fit: BoxFit.cover,
                               ),
                         width: 80,

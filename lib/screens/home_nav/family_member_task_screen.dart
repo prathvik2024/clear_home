@@ -3,8 +3,8 @@ import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:flutter/material.dart';
 
-import '../models/recent_task_model.dart';
-import '../widgets/home_widgets/recent_list_card_view.dart';
+import '../../models/recent_task_model.dart';
+import '../../widgets/home_widgets/recent_list_card_view.dart';
 
 class FamilyMemberTaskScreen extends StatefulWidget {
   FamilyMemberTaskScreen({super.key});
@@ -39,10 +39,12 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 22),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 21),
           child: IntrinsicHeight(
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -56,7 +58,9 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
                   },
                   child: Text(
                     AppStrings.todayStr,
-                    style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: (selectedIndex == 0) ? AppColors.kDarkBlue : Colors.black),
+                    style: (selectedIndex == 0)
+                        ? AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: AppColors.kDarkBlue)
+                        : AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
                   ),
                 ),
                 SizedBox(
@@ -113,16 +117,19 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
             ),
           ),
         ),
-        // Expanded(
-        //   child: Container(
-        //     child: Column(
-        //       mainAxisSize: MainAxisSize.max,
-        //       children: [
-        //         if (selectedIndex == 0) ...[TodayTask()],
-        //         if (selectedIndex == 1) ...[UpcomingTask()],
-        //         if (selectedIndex == 2) ...[PastTask()]
-        //       ],
-        //     ),
+        Expanded(
+          child: Container(
+            child: () {
+              if (selectedIndex == 1) {
+                return UpcomingTask();
+              } else if (selectedIndex == 2) {
+                return PastTask();
+              } else {
+                return TodayTask();
+              }
+            }(),
+          ),
+        )
         //   ),
         // )
       ],
@@ -134,10 +141,12 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
   }
 
   Widget UpcomingTask() {
+    recentTaskList = [...recentTaskList.reversed];
     return RecentListCardView(recentTaskList: recentTaskList);
   }
 
   Widget PastTask() {
+    recentTaskList = [...recentTaskList.reversed];
     return RecentListCardView(recentTaskList: recentTaskList);
   }
 }

@@ -45,6 +45,7 @@ class AppStrings{
   static const String dontAccountStr = "Don't have an account? ";
   static const String alreadyAccountStr = "Already have an account? ";
   static const String passwordStr = "Password";
+  static const String taskListStr = "Task List";
   static const String forgotPasswordStr = "Forgot Password?";
   static const String verificationStr = "Verification";
   static const String otpVerificationStr = "OTP Verification";

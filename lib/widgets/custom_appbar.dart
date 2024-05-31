@@ -3,22 +3,24 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../constants/fonts.dart';
 
-
-class CustomAppbar extends StatelessWidget implements PreferredSizeWidget{
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   String? screenName;
   void Function()? backClick;
+  List<Widget>? actionWidgets;
 
-  CustomAppbar({super.key, this.screenName, this.backClick });
+  CustomAppbar({super.key, this.screenName, this.backClick, this.actionWidgets});
 
   @override
   Widget build(BuildContext context) {
-   return AppBar(
-     centerTitle: true,
+    return AppBar(
+      centerTitle: true,
       backgroundColor: AppColors.kHomeBg,
-      title:(screenName != null) ? Text(
-        screenName!,
-        style: AppFonts.kPoppinsMedium.copyWith(fontSize: 20),
-      ) : null,
+      title: (screenName != null)
+          ? Text(
+              screenName!,
+              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 20),
+            )
+          : null,
       leading: IconButton(
         onPressed: backClick ?? () => Navigator.pop(context),
         icon: Icon(
@@ -27,6 +29,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget{
           size: 22,
         ),
       ),
+      actions: actionWidgets ?? null,
     );
   }
 

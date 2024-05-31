@@ -1,5 +1,6 @@
 import 'package:clear_home/models/drawer_model.dart';
 import 'package:clear_home/routes/routes.dart';
+import 'package:clear_home/screens/task_nav/task_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,11 +8,10 @@ import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/screens/bottom_nav/calendar_screen.dart';
 import 'package:clear_home/screens/bottom_nav/chat_screen.dart';
-import 'package:clear_home/screens/bottom_nav/task_list_screen.dart';
 import '../constants/fonts.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/show_toast.dart';
-import 'bottom_nav/home_screen.dart';
+import 'home_nav/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -89,62 +89,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            // return Dialog(
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            //     child: Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Row(
-            //           children: [
-            //             SvgPicture.asset(
-            //               AppStrings.svgIconLogo,
-            //               width: 42,
-            //               height: 42,
-            //               color: AppColors.kDarkBlue,
-            //             ),
-            //             SizedBox(
-            //               width: 10,
-            //             ),
-            //             Text(
-            //               "Exit App",
-            //               style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 20),
-            //             ),
-            //           ],
-            //         ),
-            //         SizedBox(
-            //           height: 20,
-            //         ),
-            //         Text(
-            //           "Are you sure to want to exit app?",
-            //           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
-            //         ),
-            //         SizedBox(
-            //           height: 20,
-            //         ),
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           children: [
-            //             TextButton(
-            //                 onPressed: () => Navigator.pop(context),
-            //                 child: Text(
-            //                   "NO",
-            //                   style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
-            //                 )),
-            //             TextButton(
-            //                 onPressed: () => SystemNavigator.pop(),
-            //                 child: Text(
-            //                   "YES",
-            //                   style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: AppColors.kDarkBlue),
-            //                 )),
-            //           ],
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // );
             return CustomDialog(
               title: AppStrings.exitAppStr,
               negativeOnclick: () => Navigator.pop(context),
@@ -317,7 +261,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       scaffoldKey: _scaffoldKey,
                     );
                   case 1:
-                    return TaskListScreen();
+                    return TaskListScreen(
+                      backScreen: (int index) {
+                        selectedPage = index;
+                        setState(() {});
+                      },
+                    );
                   case 2:
                     return CalendarScreen();
                   case 3:
@@ -338,7 +287,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               color: Colors.white,
               size: 34,
             ),
-            onPressed: () => Navigator.pushNamed(context, AppRoutes.addMembers),
+            onPressed: () {
+              switch (selectedPage) {
+                case 0:
+                  Navigator.pushNamed(context, AppRoutes.addMembers);
+                case 1:
+                  Navigator.pushNamed(context, AppRoutes.createGeneralTask);
+                case 2:
+                  Navigator.pushNamed(context, AppRoutes.addMembers);
+                case 3:
+                  Navigator.pushNamed(context, AppRoutes.addMembers);
+              }
+            },
           ),
         ),
         bottomNavigationBar: Container(
