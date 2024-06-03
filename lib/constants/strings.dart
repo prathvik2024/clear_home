@@ -6,6 +6,9 @@ class AppStrings{
   static const String lottiePath = "assets/lotties/";
 
 
+  static const String dateFormatStr = "dd-MM-yyyy";
+  static const String timeFormatStr = "hh:mm a";
+
   static const String loginStr = "Login";
   static const String createNewPasswordStr = "Create New Password";
   static const String resendOtpStr = "Resend OTP";
@@ -73,6 +76,7 @@ class AppStrings{
   static const String svgHome = AppStrings.iconPath + "home.svg";
   static const String svgTaskList = AppStrings.iconPath + "task_list.svg";
   static const String svgCalendar = AppStrings.iconPath + "calendar.svg";
+  static const String svgClock = AppStrings.iconPath + "clock.svg";
   static const String svgChat = AppStrings.iconPath + "chat.svg";
   static const String svgNotification = AppStrings.iconPath + "notification.svg";
   static const String svgAccount = AppStrings.iconPath + "account.svg";

@@ -3,7 +3,7 @@ import 'package:clear_home/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
+  CustomTextField(
       {super.key,
       required this.controller,
       this.textLabel,
@@ -18,7 +18,10 @@ class CustomTextField extends StatelessWidget {
       this.maxLength,
       this.keyboardType,
       this.minLines,
-      this.maxLines,this.borderRadius});
+      this.maxLines,
+      this.borderRadius,
+      this.onClick,
+      this.enabled});
 
   final TextEditingController controller;
   final bool isPassword;
@@ -35,6 +38,8 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final TextInputType? keyboardType;
   final double? borderRadius;
+  final void Function()? onClick;
+  bool? enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -47,31 +52,37 @@ class CustomTextField extends StatelessWidget {
             height: 8,
           ),
         ],
-        TextFormField(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          keyboardType: keyboardType,
-          validator: validationCallback,
-          controller: controller,
-          obscureText: isPassword && isSecure,
-          cursorColor: AppColors.kDarkBlue,
-          maxLength: maxLength,
-          minLines: minLines,
-          maxLines: maxLines ?? null,
-          cursorErrorColor: AppColors.kDarkBlue,
-          decoration: InputDecoration(
-              contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular( borderRadius ?? 40)),
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular( borderRadius ?? 40), borderSide: BorderSide(color: Colors.black12)),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular( borderRadius ?? 40), borderSide: BorderSide(color: AppColors.kLightBlue)),
-              prefixIcon: prefixIcon,
-              hintText: hintText,
-              hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
-              suffixIcon: suffixIcon != null
-                  ? InkWell(
-                      onTap: onTogglePassword,
-                      child: suffixIcon,
-                    )
-                  : null),
+        InkWell(
+          onTap: onClick,
+          child: TextFormField(
+            enabled: enabled,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            keyboardType: keyboardType,
+            validator: validationCallback,
+            controller: controller,
+            obscureText: isPassword && isSecure,
+            cursorColor: AppColors.kDarkBlue,
+            maxLength: maxLength,
+            minLines: minLines,
+            maxLines: maxLines ?? null,
+            cursorErrorColor: AppColors.kDarkBlue,
+            decoration: InputDecoration(
+                contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40)),
+                enabledBorder:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: BorderSide(color: Colors.black12)),
+                focusedBorder:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: BorderSide(color: AppColors.kLightBlue)),
+                prefixIcon: prefixIcon,
+                hintText: hintText,
+                hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
+                suffixIcon: suffixIcon != null
+                    ? InkWell(
+                        onTap: onTogglePassword,
+                        child: suffixIcon,
+                      )
+                    : null),
+          ),
         ),
       ],
     );
