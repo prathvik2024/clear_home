@@ -1,6 +1,7 @@
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
+import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/recent_task_model.dart';
@@ -137,16 +138,25 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
   }
 
   Widget TodayTask() {
-    return RecentListCardView(recentTaskList: recentTaskList);
+    return RecentListCardView(
+      recentTaskList: recentTaskList,
+      taskType: TaskType.TodayTask,
+    );
   }
 
   Widget UpcomingTask() {
     recentTaskList = [...recentTaskList.reversed];
-    return RecentListCardView(recentTaskList: recentTaskList);
+    return RecentListCardView(
+      recentTaskList: recentTaskList,
+      taskType: TaskType.UpcomingTask,
+    );
   }
 
   Widget PastTask() {
     recentTaskList = [...recentTaskList.reversed];
-    return RecentListCardView(recentTaskList: recentTaskList);
+    return RecentListCardView(
+      recentTaskList: recentTaskList,
+      taskType: TaskType.PastTask,
+    );
   }
 }

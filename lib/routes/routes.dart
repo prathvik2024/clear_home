@@ -10,6 +10,7 @@ import 'package:clear_home/screens/home_nav/family_member_list_screen.dart';
 import 'package:clear_home/screens/splash_screen.dart';
 import 'package:clear_home/screens/auth_module/verify_email_screen.dart';
 import 'package:clear_home/screens/task_nav/create_general_task.dart';
+import 'package:clear_home/screens/task_nav/task_details_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/task_nav/task_list_screen.dart';
@@ -28,6 +29,7 @@ class AppRoutes {
   static const String familyMemberDetails = "/familyMemberDetails";
   static const String taskList = "/taskList";
   static const String createGeneralTask = "/createGeneralTask";
+  static const String taskDetails = "/taskDetails";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     splash: (context) => SplashScreen(),
@@ -43,5 +45,6 @@ class AppRoutes {
     familyMemberDetails: (context) => FamilyMemberDetailsScreen(),
     taskList: (context) => TaskListScreen(),
     createGeneralTask: (context) => CreateGeneralTask(),
+    taskDetails: (context) => TaskDetailsScreen(),
   };
 }

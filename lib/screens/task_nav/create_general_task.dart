@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/constants/validator.dart';
-import 'package:clear_home/models/member_assignee_model.dart';
+import 'package:clear_home/models/task_item_model.dart';
 import 'package:clear_home/widgets/custom_appbar.dart';
 import 'package:clear_home/widgets/custom_button.dart';
 import 'package:clear_home/widgets/custom_textfield.dart';
@@ -35,12 +35,7 @@ class _CreateGeneralTaskState extends State<CreateGeneralTask> {
 
   MultiSelectController _multiSelectController = MultiSelectController();
 
-  List<MemberAssigneeModel> assigneeList = [
-    MemberAssigneeModel("Family Member 1", false),
-    MemberAssigneeModel("Family Member 2", false),
-    MemberAssigneeModel("Family Member 3", false),
-    MemberAssigneeModel("Family Member 4", false)
-  ];
+  List<String> assigneeList = ["Family Member 1", "Family Member 2" "Family Member 3", "Family Member 4"];
   String? startDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now()),
       endDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now());
   String? startTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now()),
@@ -53,8 +48,6 @@ class _CreateGeneralTaskState extends State<CreateGeneralTask> {
       ShowToast(msg: "Done");
     }
   }
-
-  // String result = "Family Member 1";
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +250,7 @@ class _CreateGeneralTaskState extends State<CreateGeneralTask> {
                   keyboardType: TextInputType.multiline,
                   textLabel: AppStrings.taskDescStr,
                   minLines: 5,
+                  maxLines: 8,
                   borderRadius: 15,
                 ),
                 SizedBox(
@@ -279,8 +273,8 @@ class _CreateGeneralTaskState extends State<CreateGeneralTask> {
                   borderWidth: 0,
                   options: assigneeList.map((item) {
                     return ValueItem(
-                      label: item.title,
-                      value: item.title,
+                      label: item,
+                      value: item,
                     );
                   }).toList(),
                   selectionType: SelectionType.multi,

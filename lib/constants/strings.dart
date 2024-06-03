@@ -1,10 +1,10 @@
-class AppStrings{
+enum TaskType { TodayTask, UpcomingTask, PastTask }
 
+class AppStrings {
   static const String appName = "Clear Home";
   static const String iconPath = "assets/icons/";
   static const String imagePath = "assets/images/";
   static const String lottiePath = "assets/lotties/";
-
 
   static const String dateFormatStr = "dd-MM-yyyy";
   static const String timeFormatStr = "hh:mm a";
@@ -13,6 +13,7 @@ class AppStrings{
   static const String createNewPasswordStr = "Create New Password";
   static const String resendOtpStr = "Resend OTP";
   static const String sendStr = "Send";
+  static const String okStr = "Ok";
   static const String saveStr = "Save";
   static const String noButtonStr = "No";
   static const String yesButtonStr = "Yes";
@@ -53,10 +54,26 @@ class AppStrings{
   static const String passwordStr = "Password";
   static const String taskListStr = "Task List";
   static const String taskNameStr = "Task Name";
+  static const String todayTaskDetailsStr = "Today's Task Details";
+  static const String upcomingTaskDetailsStr = "Upcoming Task Detail";
+  static const String pastTaskDetailsStr = "Past Task Detail";
   static const String taskDateStr = "Task Date";
   static const String taskDescStr = "Task Description";
   static const String taskTimeStr = "Task Time";
+  static const String dueTimeStr = "Due Time";
+  static const String taskTypeStr = "Task Type";
+  static const String startDateStr = "Start Date";
+  static const String endDateStr = "End Date";
+  static const String menuDetailsStr = "Menu Details";
+  static const String assignedToStr = "Assigned To";
+  static const String itemListStr = "Item List";
+  static const String taskStatusStr = "Task Status";
+  static const String addCommentStr = "Add Comment";
+  static const String completedStr = "Completed";
+  static const String inProgressStr = "In Progress";
   static const String taskStartTimeStr = "10:00 AM";
+  static const String taskTimeTitleStr = "10:00AM - 11:00AM";
+  static const String taskDateTitleStr = "03 June, 2024";
   static const String taskEndTimeStr = "06:00 AM";
   static const String buyGroceriesStr = "Buy Groceries";
   static const String createGeneralStr = "Create General Task";
@@ -68,6 +85,7 @@ class AppStrings{
   static const String deleteFamilyMemberStr = "Are you sure you want to delete this family member?";
   static const String exitAppStr = "Are you sure you want to sure to exit this app?";
   static const String otpVerificationMsgStr = "Please enter the 4 digit code sent to your register email";
+  static const String descriptionStr = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
 
   // Svgs
   static const String svgSmLogo = AppStrings.iconPath + "logo_sm.svg";
@@ -91,13 +109,13 @@ class AppStrings{
   static const String svgDownArrow = AppStrings.iconPath + "down_arrow.svg";
   static const String svgUpArrow = AppStrings.iconPath + "up_arrow.svg";
   static const String svgDot = AppStrings.iconPath + "dot.svg";
+  static const String svgEdit = AppStrings.iconPath + "edit.svg";
+  static const String svgCheckboxTik = AppStrings.iconPath + "yes_checkbox.svg";
   static const String svgImageNotFound = AppStrings.iconPath + "image_not_found.svg";
-
 
   static const String lottieDelete = AppStrings.lottiePath + "delete_lottie.json";
 
   static const String imgProfile = AppStrings.imagePath + "profile.png";
-
 
   // hints
   static const String hintEmail = "johndeo@gmail.com";
@@ -106,7 +124,6 @@ class AppStrings{
   static const String hintRelation = "Brother";
   static const String hintPassword = "********";
 
-
   // Errors
   static const String emailError = "Please enter valid email!";
   static const String passwordError = "Please enter valid password!";
@@ -114,6 +131,4 @@ class AppStrings{
   static const String relationError = "Please enter valid relation!";
   static const String phoneError = "Please enter valid phone number!";
   static const String confirmPasswordError = "Confirm Password can't match!";
-
-
 }

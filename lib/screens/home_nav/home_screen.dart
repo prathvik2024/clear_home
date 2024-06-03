@@ -152,7 +152,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 21),
-                child: RecentListCardView(recentTaskList: recentTaskList, physics: NeverScrollableScrollPhysics(),shrinkWrap: true,),
+                child: RecentListCardView(
+                  recentTaskList: recentTaskList,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  taskType: TaskType.TodayTask,
+                ),
               )
             ],
           ),
