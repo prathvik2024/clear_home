@@ -27,11 +27,14 @@ class AppStrings {
   static const String editMemberDetailsStr = "Edit Family Member Details";
   static const String familyMemberListStr = "Family Members List";
   static const String travelListStr = "Travel List";
+  static const String mealStr = "Meal";
   static const String addTravelChecklistStr = "Add Travel Checklist";
+  static const String addMealStr = "Add Task - Prepare Meal";
   static const String editTravelChecklistStr = "Edit Travel Checklist";
   static const String addMemberBtnStr = "Invite / Add";
   static const String memberNameStr = "Member Name";
   static const String destinationNameStr = "Destination Name";
+  static const String mealTitleStr = "Meal Title";
   static const String memberNameTagStr = "Member Name: ";
   static const String relationStr = "Relation";
   static const String relationTagStr = "Relation: ";
@@ -48,6 +51,8 @@ class AppStrings {
   static const String taskStr = "Task";
   static const String startDateHintStr = "31-05-2024";
   static const String startStr = "Start";
+  static const String mealDateStr = "Meal Date";
+  static const String timeStr = "Time";
   static const String endStr = "End";
   static const String mobileStr = "Mobile Number";
   static const String mobileTagStr = "Mobile Number: ";

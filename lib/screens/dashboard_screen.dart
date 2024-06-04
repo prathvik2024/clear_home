@@ -1,6 +1,7 @@
 import 'package:clear_home/models/drawer_model.dart';
 import 'package:clear_home/routes/routes.dart';
-import 'package:clear_home/screens/task_nav/task_list_screen.dart';
+import 'package:clear_home/screens/meal_module/meal_list_screen.dart';
+import 'package:clear_home/screens/task_module/task_list_screen.dart';
 import 'package:clear_home/screens/travel_checklist/travel_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +11,7 @@ import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/screens/calendar_screen.dart';
 import '../constants/fonts.dart';
 import '../widgets/custom_dialog.dart';
-import '../widgets/show_toast.dart';
-import 'chat_nav/chat_list_screen.dart';
+import 'chat_module/chat_list_screen.dart';
 import 'home_nav/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -75,7 +75,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           setState(() {});
         }));
     drawerList.add(DrawerModel(title: "Category", icon: AppStrings.svgCategory, child: [
-      DrawerModel(title: "Meal", icon: AppStrings.svgDot),
+      DrawerModel(
+          title: "Meal",
+          icon: AppStrings.svgDot,
+          onClick: () {
+            _scaffoldKey.currentState!.closeDrawer();
+            selectedPage = 5;
+            setState(() {});
+          }),
       DrawerModel(title: "Grocery", icon: AppStrings.svgDot),
       DrawerModel(title: "Medical", icon: AppStrings.svgDot)
     ]));
@@ -231,6 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       drawerList[index].child?.length ?? 0,
                                       (i) {
                                         return ListTile(
+                                          onTap: drawerList[index].child?[i].onClick,
                                           contentPadding: EdgeInsets.zero,
                                           dense: true,
                                           visualDensity: VisualDensity(vertical: -4),
@@ -292,6 +300,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         setState(() {});
                       },
                     );
+                  case 5:
+                    return MealListScreen(
+                      backScreen: (int index) {
+                        selectedPage = 0;
+                        setState(() {});
+                      },
+                    );
                   default:
                     return Container();
                 }
@@ -320,6 +335,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Navigator.pushNamed(context, AppRoutes.addMembers);
                 case 4:
                   Navigator.pushNamed(context, AppRoutes.addTravelList);
+                case 5:
+                  Navigator.pushNamed(context, AppRoutes.addMeal);
               }
             },
           ),

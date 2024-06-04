@@ -1,4 +1,3 @@
-import 'package:clear_home/screens/chat_nav/chat_details_screen.dart';
 import 'package:clear_home/screens/home_nav/add_members_screen.dart';
 import 'package:clear_home/screens/dashboard_screen.dart';
 import 'package:clear_home/screens/auth_module/forgot_password_screen.dart';
@@ -8,15 +7,18 @@ import 'package:clear_home/screens/auth_module/otp_verification_screen.dart';
 import 'package:clear_home/screens/auth_module/register_screen.dart';
 import 'package:clear_home/screens/home_nav/family_member_details_screen.dart';
 import 'package:clear_home/screens/home_nav/family_member_list_screen.dart';
+import 'package:clear_home/screens/meal_module/add_meal_screen.dart';
+import 'package:clear_home/screens/meal_module/meal_list_screen.dart';
 import 'package:clear_home/screens/splash_screen.dart';
 import 'package:clear_home/screens/auth_module/verify_email_screen.dart';
-import 'package:clear_home/screens/task_nav/create_general_task.dart';
-import 'package:clear_home/screens/task_nav/task_details_screen.dart';
 import 'package:clear_home/screens/travel_checklist/add_travel_checklist_screen.dart';
 import 'package:clear_home/screens/travel_checklist/travel_list_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/task_nav/task_list_screen.dart';
+import '../screens/chat_module/chat_details_screen.dart';
+import '../screens/task_module/create_general_task.dart';
+import '../screens/task_module/task_details_screen.dart';
+import '../screens/task_module/task_list_screen.dart';
 
 class AppRoutes {
   static const String splash = "/";
@@ -36,6 +38,8 @@ class AppRoutes {
   static const String chatDetails = "/chatDetails";
   static const String  travelList = "/travelList";
   static const String  addTravelList = "/addTravelChecklist";
+  static const String  mealList = "/mealList";
+  static const String  addMeal = "/addMeal";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     splash: (context) => SplashScreen(),
@@ -55,5 +59,7 @@ class AppRoutes {
     chatDetails: (context) => ChatDetailsScreen(),
     travelList: (context) => TravelListScreen(),
     addTravelList: (context) => AddTravelChecklistScreen(),
+    mealList: (context) => MealListScreen(),
+    addMeal: (context) => AddMealScreen(),
   };
 }
