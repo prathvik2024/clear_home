@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   CustomTextField(
       {super.key,
-      required this.controller,
+      this.controller,
       this.textLabel,
       this.isPassword = false,
       this.isSecure = false,
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
       this.bgColor,
       this.focusBorderSide});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool isPassword;
   final bool isSecure;
   final Widget? prefixIcon;

@@ -1,12 +1,13 @@
 import 'package:clear_home/models/drawer_model.dart';
 import 'package:clear_home/routes/routes.dart';
 import 'package:clear_home/screens/task_nav/task_list_screen.dart';
+import 'package:clear_home/screens/travel_checklist/travel_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/strings.dart';
-import 'package:clear_home/screens/bottom_nav/calendar_screen.dart';
+import 'package:clear_home/screens/calendar_screen.dart';
 import '../constants/fonts.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/show_toast.dart';
@@ -65,7 +66,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     drawerList.add(DrawerModel(title: "Home", icon: AppStrings.svgHome));
     drawerList.add(DrawerModel(title: "Calendar", icon: AppStrings.svgCalendar));
     drawerList.add(DrawerModel(title: "Task", icon: AppStrings.svgTaskList));
-    drawerList.add(DrawerModel(title: "Travel Checklist", icon: AppStrings.svgTravel));
+    drawerList.add(DrawerModel(
+        title: "Travel Checklist",
+        icon: AppStrings.svgTravel,
+        onClick: () {
+          _scaffoldKey.currentState!.closeDrawer();
+          selectedPage = 4;
+          setState(() {});
+        }));
     drawerList.add(DrawerModel(title: "Category", icon: AppStrings.svgCategory, child: [
       DrawerModel(title: "Meal", icon: AppStrings.svgDot),
       DrawerModel(title: "Grocery", icon: AppStrings.svgDot),
@@ -195,6 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         return Column(
                           children: [
                             ListTile(
+                              onTap: drawerList[index].onClick,
                               leading: SvgPicture.asset(
                                 drawerList[index].icon,
                                 color: Colors.white,
@@ -270,10 +279,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   case 2:
                     return CalendarScreen();
                   case 3:
-                    return ChatListScreen(backScreen: (int index){
-                      selectedPage = index;
-                      setState(() {});
-                    },);
+                    return ChatListScreen(
+                      backScreen: (int index) {
+                        selectedPage = index;
+                        setState(() {});
+                      },
+                    );
+                  case 4:
+                    return TravelListScreen(
+                      backScreen: (int index) {
+                        selectedPage = 0;
+                        setState(() {});
+                      },
+                    );
                   default:
                     return Container();
                 }
@@ -300,6 +318,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Navigator.pushNamed(context, AppRoutes.addMembers);
                 case 3:
                   Navigator.pushNamed(context, AppRoutes.addMembers);
+                case 4:
+                  Navigator.pushNamed(context, AppRoutes.addTravelList);
               }
             },
           ),

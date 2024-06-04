@@ -16,6 +16,7 @@ class AppStrings {
   static const String okStr = "Ok";
   static const String saveStr = "Save";
   static const String noButtonStr = "No";
+  static const String cancelStr = "Cancel";
   static const String yesButtonStr = "Yes";
   static const String signUpStr = "Sign Up";
   static const String todayStr = "Today";
@@ -25,8 +26,12 @@ class AppStrings {
   static const String addMembersStr = "Add Members";
   static const String editMemberDetailsStr = "Edit Family Member Details";
   static const String familyMemberListStr = "Family Members List";
+  static const String travelListStr = "Travel List";
+  static const String addTravelChecklistStr = "Add Travel Checklist";
+  static const String editTravelChecklistStr = "Edit Travel Checklist";
   static const String addMemberBtnStr = "Invite / Add";
   static const String memberNameStr = "Member Name";
+  static const String destinationNameStr = "Destination Name";
   static const String memberNameTagStr = "Member Name: ";
   static const String relationStr = "Relation";
   static const String relationTagStr = "Relation: ";
@@ -58,6 +63,7 @@ class AppStrings {
   static const String upcomingTaskDetailsStr = "Upcoming Task Detail";
   static const String pastTaskDetailsStr = "Past Task Detail";
   static const String taskDateStr = "Task Date";
+  static const String travelDateStr = "Travel Date";
   static const String taskDescStr = "Task Description";
   static const String taskTimeStr = "Task Time";
   static const String dueTimeStr = "Due Time";
@@ -68,6 +74,7 @@ class AppStrings {
   static const String menuDetailsStr = "Menu Details";
   static const String assignedToStr = "Assigned To";
   static const String itemListStr = "Item List";
+  static const String itemNameStr = "Item Name";
   static const String taskStatusStr = "Task Status";
   static const String addCommentStr = "Add Comment";
   static const String messagesStr = "Messages";
@@ -85,6 +92,7 @@ class AppStrings {
   static const String familyMemberDetailStr = "Family Member Detail";
   static const String verificationMsgStr = "Dont't worry! you will be updated soon on your email";
   static const String deleteFamilyMemberStr = "Are you sure you want to delete this family member?";
+  static const String deleteTravelListStr = "Are you sure you want to delete this travel list?";
   static const String exitAppStr = "Are you sure you want to sure to exit this app?";
   static const String otpVerificationMsgStr = "Please enter the 4 digit code sent to your register email";
   static const String descriptionStr = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
@@ -119,6 +127,7 @@ class AppStrings {
   static const String svgAttachment = AppStrings.iconPath + "attachment.svg";
   static const String svgEmoji = AppStrings.iconPath + "emoji.svg";
   static const String svgSend = AppStrings.iconPath + "send.svg";
+  static const String svgMinus = AppStrings.iconPath + "minus.svg";
 
   static const String lottieDelete = AppStrings.lottiePath + "delete_lottie.json";
 

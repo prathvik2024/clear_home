@@ -29,7 +29,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
     MessageModel("Hii My name is prathvik", "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
     MessageModel("what are you doing?", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
+    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
   ];
 
   @override
@@ -54,6 +54,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
       backgroundColor: AppColors.kHomeBg,
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: height * 0.10,
@@ -115,8 +116,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                   return Container(
                       padding: EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
                       child: Align(
-                        alignment: (messageModel[index].isSender) ? Alignment.topRight : Alignment.topLeft,
+                        alignment: (messageModel[index].isSender) ? Alignment.centerRight : Alignment.centerLeft,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           textDirection: (messageModel[index].isSender) ? TextDirection.rtl : TextDirection.ltr,
                           children: [
                             CircularImage(
@@ -152,24 +154,29 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                   SizedBox(
                                     height: 6,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8, left: 4),
-                                    child: Text(
-                                      "8:10 pm",
-                                      style: AppFonts.kPoppinsRegular.copyWith(fontSize: 12, color: AppColors.kGray),
-                                    ),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: (messageModel[index].isSender) ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8, left: 4),
+                                        child: Text(
+                                          "8:10 pm",
+                                          style: AppFonts.kPoppinsRegular.copyWith(fontSize: 12, color: AppColors.kGray),
+                                        ),
+                                      ),
+                                      if (messageModel[index].isSender) ...[
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 8.0),
+                                          child: SvgPicture.asset(
+                                            AppStrings.svgChatCheck,
+                                          ),
+                                        ),
+                                      ]
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
-                            if (messageModel[index].isSender) ...[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0, bottom: 15),
-                                child: SvgPicture.asset(
-                                  AppStrings.svgChatCheck,
-                                ),
-                              ),
-                            ]
                           ],
                         ),
                       ));

@@ -40,7 +40,6 @@ class _FamilyMemberListScreenState extends State<FamilyMemberListScreen> {
       appBar: CustomAppbar(
         backClick: () => Navigator.pop(context, {"": null}),
         screenName: AppStrings.familyMemberListStr,
-
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

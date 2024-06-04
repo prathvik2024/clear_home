@@ -36,12 +36,13 @@ class _CreateGeneralTaskState extends State<CreateGeneralTask> {
   MultiSelectController _multiSelectController = MultiSelectController();
 
   List<String> assigneeList = ["Family Member 1", "Family Member 2" "Family Member 3", "Family Member 4"];
+  List<String> selectedAssignee = [];
+
   String? startDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now()),
       endDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now());
   String? startTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now()),
       endTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now());
 
-  List<String> selectedAssignee = [];
 
   void validateGeneralTask() {
     if (_formKey.currentState!.validate()) {

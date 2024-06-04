@@ -12,6 +12,8 @@ import 'package:clear_home/screens/splash_screen.dart';
 import 'package:clear_home/screens/auth_module/verify_email_screen.dart';
 import 'package:clear_home/screens/task_nav/create_general_task.dart';
 import 'package:clear_home/screens/task_nav/task_details_screen.dart';
+import 'package:clear_home/screens/travel_checklist/add_travel_checklist_screen.dart';
+import 'package:clear_home/screens/travel_checklist/travel_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/task_nav/task_list_screen.dart';
@@ -32,6 +34,8 @@ class AppRoutes {
   static const String createGeneralTask = "/createGeneralTask";
   static const String taskDetails = "/taskDetails";
   static const String chatDetails = "/chatDetails";
+  static const String  travelList = "/travelList";
+  static const String  addTravelList = "/addTravelChecklist";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     splash: (context) => SplashScreen(),
@@ -49,5 +53,7 @@ class AppRoutes {
     createGeneralTask: (context) => CreateGeneralTask(),
     taskDetails: (context) => TaskDetailsScreen(),
     chatDetails: (context) => ChatDetailsScreen(),
+    travelList: (context) => TravelListScreen(),
+    addTravelList: (context) => AddTravelChecklistScreen(),
   };
 }
