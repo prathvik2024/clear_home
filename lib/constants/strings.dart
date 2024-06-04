@@ -62,6 +62,7 @@ class AppStrings {
   static const String taskTimeStr = "Task Time";
   static const String dueTimeStr = "Due Time";
   static const String taskTypeStr = "Task Type";
+  static const String typeMessageStr = "Type a message";
   static const String startDateStr = "Start Date";
   static const String endDateStr = "End Date";
   static const String menuDetailsStr = "Menu Details";
@@ -69,6 +70,7 @@ class AppStrings {
   static const String itemListStr = "Item List";
   static const String taskStatusStr = "Task Status";
   static const String addCommentStr = "Add Comment";
+  static const String messagesStr = "Messages";
   static const String completedStr = "Completed";
   static const String inProgressStr = "In Progress";
   static const String taskStartTimeStr = "10:00 AM";
@@ -112,6 +114,11 @@ class AppStrings {
   static const String svgEdit = AppStrings.iconPath + "edit.svg";
   static const String svgCheckboxTik = AppStrings.iconPath + "yes_checkbox.svg";
   static const String svgImageNotFound = AppStrings.iconPath + "image_not_found.svg";
+  static const String svgChatCheck = AppStrings.iconPath + "chat_check.svg";
+  static const String svgChatMenu = AppStrings.iconPath + "chat_menu.svg";
+  static const String svgAttachment = AppStrings.iconPath + "attachment.svg";
+  static const String svgEmoji = AppStrings.iconPath + "emoji.svg";
+  static const String svgSend = AppStrings.iconPath + "send.svg";
 
   static const String lottieDelete = AppStrings.lottiePath + "delete_lottie.json";
 

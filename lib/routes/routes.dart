@@ -1,3 +1,4 @@
+import 'package:clear_home/screens/chat_nav/chat_details_screen.dart';
 import 'package:clear_home/screens/home_nav/add_members_screen.dart';
 import 'package:clear_home/screens/dashboard_screen.dart';
 import 'package:clear_home/screens/auth_module/forgot_password_screen.dart';
@@ -30,6 +31,7 @@ class AppRoutes {
   static const String taskList = "/taskList";
   static const String createGeneralTask = "/createGeneralTask";
   static const String taskDetails = "/taskDetails";
+  static const String chatDetails = "/chatDetails";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     splash: (context) => SplashScreen(),
@@ -46,5 +48,6 @@ class AppRoutes {
     taskList: (context) => TaskListScreen(),
     createGeneralTask: (context) => CreateGeneralTask(),
     taskDetails: (context) => TaskDetailsScreen(),
+    chatDetails: (context) => ChatDetailsScreen(),
   };
 }

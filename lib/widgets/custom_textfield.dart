@@ -21,13 +21,15 @@ class CustomTextField extends StatelessWidget {
       this.maxLines,
       this.borderRadius,
       this.onClick,
-      this.enabled});
+      this.enabled,
+      this.bgColor,
+      this.focusBorderSide});
 
   final TextEditingController controller;
   final bool isPassword;
   final bool isSecure;
   final Widget? prefixIcon;
-  final Icon? suffixIcon;
+  final Widget? suffixIcon;
   final String? hintText;
   final VoidCallback? onTogglePassword;
   final String? Function(String?)? validationCallback;
@@ -40,6 +42,8 @@ class CustomTextField extends StatelessWidget {
   final double? borderRadius;
   final void Function()? onClick;
   bool? enabled;
+  Color? bgColor;
+  BorderSide? focusBorderSide;
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +71,14 @@ class CustomTextField extends StatelessWidget {
             maxLines: maxLines ?? null,
             cursorErrorColor: AppColors.kDarkBlue,
             decoration: InputDecoration(
+                fillColor: bgColor,
+                filled: (bgColor != null) ? true : false,
                 contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40)),
                 enabledBorder:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: BorderSide(color: Colors.black12)),
-                focusedBorder:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: BorderSide(color: AppColors.kLightBlue)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: focusBorderSide ?? BorderSide(color: AppColors.kDarkBlue)),
                 prefixIcon: prefixIcon,
                 hintText: hintText,
                 hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),

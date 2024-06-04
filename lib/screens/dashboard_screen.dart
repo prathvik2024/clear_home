@@ -7,10 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/screens/bottom_nav/calendar_screen.dart';
-import 'package:clear_home/screens/bottom_nav/chat_screen.dart';
 import '../constants/fonts.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/show_toast.dart';
+import 'chat_nav/chat_list_screen.dart';
 import 'home_nav/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -270,7 +270,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   case 2:
                     return CalendarScreen();
                   case 3:
-                    return ChatScreen();
+                    return ChatListScreen(backScreen: (int index){
+                      selectedPage = index;
+                      setState(() {});
+                    },);
                   default:
                     return Container();
                 }
