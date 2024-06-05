@@ -23,7 +23,9 @@ class CustomTextField extends StatelessWidget {
       this.onClick,
       this.enabled,
       this.bgColor,
-      this.focusBorderSide});
+      this.focusBorderSide,
+      this.errorText,
+      this.onChange});
 
   final TextEditingController? controller;
   final bool isPassword;
@@ -41,9 +43,11 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final double? borderRadius;
   final void Function()? onClick;
+  final void Function(String)? onChange;
   bool? enabled;
   Color? bgColor;
   BorderSide? focusBorderSide;
+  String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +63,7 @@ class CustomTextField extends StatelessWidget {
         InkWell(
           onTap: onClick,
           child: TextFormField(
+            onChanged: onChange,
             enabled: enabled,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: keyboardType,
@@ -81,6 +86,7 @@ class CustomTextField extends StatelessWidget {
                     borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: focusBorderSide ?? BorderSide(color: AppColors.kDarkBlue)),
                 prefixIcon: prefixIcon,
                 hintText: hintText,
+                errorText: errorText,
                 hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                 suffixIcon: suffixIcon != null
                     ? InkWell(

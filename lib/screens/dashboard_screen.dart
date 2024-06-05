@@ -63,9 +63,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
       },
     );
 
-    drawerList.add(DrawerModel(title: "Home", icon: AppStrings.svgHome));
-    drawerList.add(DrawerModel(title: "Calendar", icon: AppStrings.svgCalendar));
-    drawerList.add(DrawerModel(title: "Task", icon: AppStrings.svgTaskList));
+    drawerList.add(DrawerModel(
+        title: "Home",
+        icon: AppStrings.svgHome,
+        onClick: () {
+          _scaffoldKey.currentState!.closeDrawer();
+          setState(() {});
+        }));
+    drawerList.add(DrawerModel(
+        title: "Calendar",
+        icon: AppStrings.svgCalendar,
+        onClick: () {
+          _scaffoldKey.currentState!.closeDrawer();
+          selectedPage = 2;
+          setState(() {});
+        }));
+    drawerList.add(DrawerModel(
+        title: "Task",
+        icon: AppStrings.svgTaskList,
+        onClick: () {
+          _scaffoldKey.currentState!.closeDrawer();
+          selectedPage = 1;
+          setState(() {});
+        }));
     drawerList.add(DrawerModel(
         title: "Travel Checklist",
         icon: AppStrings.svgTravel,
@@ -276,6 +296,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   case 0:
                     return HomeScreen(
                       scaffoldKey: _scaffoldKey,
+                        backScreen: (int index) {
+                          selectedPage = index;
+                          setState(() {});
+                        }
                     );
                   case 1:
                     return TaskListScreen(

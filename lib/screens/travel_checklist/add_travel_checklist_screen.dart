@@ -293,7 +293,7 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                               border: Border.all(
                                 color: Colors.black12,
                               )),
-                          hint: "Assign to",
+                          hint: AppStrings.assignedToStr,
                           onOptionSelected: (result) {},
                           fieldBackgroundColor: AppColors.kLiteBlue,
                           focusedBorderColor: Colors.transparent,

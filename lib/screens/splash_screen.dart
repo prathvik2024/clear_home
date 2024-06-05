@@ -4,7 +4,6 @@ import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -16,7 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, AppRoutes.dashboard),);
+    Future.delayed(
+      Duration(seconds: 2),
+      () => Navigator.pushReplacementNamed(context, AppRoutes.login),
+    );
   }
 
   @override
@@ -29,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         height: height,
         decoration: BoxDecoration(gradient: AppColors.kGradientSplash),
         child: Center(
-        child: SvgPicture.asset(AppStrings.svgIconLogo),
+          child: SvgPicture.asset(AppStrings.svgIconLogo),
         ),
       ),
     );

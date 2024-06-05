@@ -14,8 +14,9 @@ import '../../models/recent_task_model.dart';
 
 class HomeScreen extends StatefulWidget {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  Function(int)? backScreen;
 
-  HomeScreen({super.key, required this.scaffoldKey});
+  HomeScreen({super.key, required this.scaffoldKey, required this.backScreen});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -139,7 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.backScreen?.call(1);
+                        },
                         child: Text(
                           AppStrings.seeAllStr,
                           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: AppColors.kDarkBlue),

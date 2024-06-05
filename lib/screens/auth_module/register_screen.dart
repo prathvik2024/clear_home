@@ -137,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 textLabel: AppStrings.newPasswordStr,
                                 controller: passwordController,
                                 hintText: AppStrings.hintPassword,
+                                maxLines: 1,
                                 validationCallback: validatePassword,
                                 isPassword: true,
                                 suffixIcon: Icon(
@@ -156,6 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 textLabel: AppStrings.confirmPasswordStr,
                                 controller: confirmPasswordController,
                                 hintText: AppStrings.hintPassword,
+                                maxLines: 1,
                                 validationCallback: validateConfirmPassword,
                                 isPassword: true,
                                 suffixIcon: Icon(

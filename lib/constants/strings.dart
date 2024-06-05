@@ -76,7 +76,10 @@ class AppStrings {
   static const String typeMessageStr = "Type a message";
   static const String startDateStr = "Start Date";
   static const String endDateStr = "End Date";
+  static const String addMoreStr = "Add More";
+  static const String deleteStr = "Delete";
   static const String menuDetailsStr = "Menu Details";
+  static const String mealDetailsStr = "Meal Details";
   static const String assignedToStr = "Assigned To";
   static const String itemListStr = "Item List";
   static const String itemNameStr = "Item Name";

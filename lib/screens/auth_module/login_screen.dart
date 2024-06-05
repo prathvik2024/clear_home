@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser() {
     if (_loginFormKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login")));
+      Navigator.pushNamed(context, AppRoutes.dashboard);
     }
   }
 
@@ -102,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: passwordController,
                                 hintText: AppStrings.hintPassword,
                                 validationCallback: validatePassword,
+                                maxLines: 1,
                                 isPassword: true,
                                 suffixIcon: Icon(
                                   isSecure ? CupertinoIcons.eye_slash_fill : Icons.remove_red_eye_rounded,

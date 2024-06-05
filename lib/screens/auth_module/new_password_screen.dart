@@ -101,6 +101,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                   CustomTextField(
                                     textLabel: AppStrings.newPasswordStr,
                                     controller: passwordController,
+                                    maxLines: 1,
                                     hintText: AppStrings.hintPassword,
                                     validationCallback: validatePassword,
                                     isPassword: true,
@@ -120,6 +121,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                   CustomTextField(
                                     textLabel: AppStrings.confirmPasswordStr,
                                     controller: confirmPasswordController,
+                                      maxLines: 1,
                                     hintText: AppStrings.hintPassword,
                                     validationCallback: validateConfirmPassword,
                                     isPassword: true,

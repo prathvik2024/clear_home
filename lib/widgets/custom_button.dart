@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
         width: double.maxFinite,
         child: ElevatedButton(
+          iconAlignment: IconAlignment.start,
           onPressed: onClick,
           child: Text(
             label,
