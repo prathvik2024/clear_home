@@ -4,8 +4,8 @@ import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/recent_task_model.dart';
-import '../../widgets/home_widgets/recent_list_card_view.dart';
+import '../../../models/recent_task_model.dart';
+import '../../../widgets/home_widgets/recent_list_card_view.dart';
 
 class FamilyMemberTaskScreen extends StatefulWidget {
   FamilyMemberTaskScreen({super.key});
@@ -16,27 +16,23 @@ class FamilyMemberTaskScreen extends StatefulWidget {
 
 class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
   int selectedIndex = 0;
-  List<RecentTaskModel> recentTaskList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"));
-    recentTaskList.add(RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"));
-  }
+  List<RecentTaskModel> recentTaskList = [
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
+    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
+    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +116,7 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
         ),
         Expanded(
           child: Container(
-            child: () {
+              child: () {
               if (selectedIndex == 1) {
                 return UpcomingTask();
               } else if (selectedIndex == 2) {

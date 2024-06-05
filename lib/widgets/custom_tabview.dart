@@ -5,8 +5,8 @@ import '../constants/fonts.dart';
 import '../constants/strings.dart';
 
 class CustomTabview extends StatelessWidget {
-  TabController tabController;
-  Function(int index) tabChange;
+  final TabController tabController;
+  final Function(int index) tabChange;
 
   CustomTabview({super.key, required this.tabController, required this.tabChange});
 
@@ -14,7 +14,6 @@ class CustomTabview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Card(
       color: Colors.white,
       margin: EdgeInsets.zero,

@@ -29,7 +29,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           size: 22,
         ),
       ),
-      actions: actionWidgets ?? null,
+      actions: actionWidgets,
     );
   }
 

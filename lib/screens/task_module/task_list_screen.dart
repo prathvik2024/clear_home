@@ -4,8 +4,8 @@ import 'package:clear_home/widgets/custom_appbar.dart';
 import 'package:clear_home/widgets/custom_tabview.dart';
 import 'package:flutter/material.dart';
 
-import '../home_nav/family_member_profile_screen.dart';
-import '../home_nav/family_member_task_screen.dart';
+import '../home_nav/family_member_module/family_member_profile_screen.dart';
+import '../home_nav/family_member_module/family_member_task_screen.dart';
 
 class TaskListScreen extends StatefulWidget {
   Function(int index)? backScreen;

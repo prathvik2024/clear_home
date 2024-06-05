@@ -81,8 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.cover,
               ),
               onclick: () {
-                Scaffold.of(context).openDrawer();
-                widget.scaffoldKey.currentState!.openDrawer();
+                widget.scaffoldKey.currentState?.openDrawer();
               },
             ),
             Spacer(),

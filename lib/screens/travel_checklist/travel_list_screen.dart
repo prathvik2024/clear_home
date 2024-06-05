@@ -8,16 +8,11 @@ import '../../routes/routes.dart';
 import '../../widgets/custom_dialog.dart';
 import '../../widgets/home_widgets/circular_image.dart';
 
-class TravelListScreen extends StatefulWidget {
+class TravelListScreen extends StatelessWidget {
   void Function(int index)? backScreen;
 
   TravelListScreen({super.key, this.backScreen});
 
-  @override
-  State<TravelListScreen> createState() => _TravelListScreenState();
-}
-
-class _TravelListScreenState extends State<TravelListScreen> {
   List<String> travelList = [
     "Italy",
     "America",
@@ -39,7 +34,7 @@ class _TravelListScreenState extends State<TravelListScreen> {
       backgroundColor: AppColors.kHomeBg,
       appBar: CustomAppbar(
         screenName: AppStrings.travelListStr,
-        backClick: () => widget.backScreen?.call(1),
+        backClick: () => backScreen?.call(1),
         actionWidgets: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),

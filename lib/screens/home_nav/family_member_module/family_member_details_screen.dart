@@ -1,8 +1,8 @@
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
-import 'package:clear_home/screens/home_nav/family_member_profile_screen.dart';
-import 'package:clear_home/screens/home_nav/family_member_task_screen.dart';
+import 'package:clear_home/screens/home_nav/family_member_module/family_member_profile_screen.dart';
+import 'package:clear_home/screens/home_nav/family_member_module/family_member_task_screen.dart';
 import 'package:clear_home/widgets/custom_appbar.dart';
 import 'package:clear_home/widgets/custom_tabview.dart';
 import 'package:flutter/material.dart';

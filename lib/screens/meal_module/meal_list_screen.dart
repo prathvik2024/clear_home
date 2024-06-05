@@ -7,16 +7,11 @@ import '../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_dialog.dart';
 
-class MealListScreen extends StatefulWidget {
+class MealListScreen extends StatelessWidget {
   void Function(int index)? backScreen;
 
   MealListScreen({super.key, this.backScreen});
 
-  @override
-  State<MealListScreen> createState() => _MealListScreenState();
-}
-
-class _MealListScreenState extends State<MealListScreen> {
   List<String> mealList = [
     "Paneer tika",
     "Manchuriyan",
@@ -38,7 +33,7 @@ class _MealListScreenState extends State<MealListScreen> {
       backgroundColor: AppColors.kHomeBg,
       appBar: CustomAppbar(
         screenName: AppStrings.mealStr,
-        backClick: () => widget.backScreen?.call(1),
+        backClick: () => backScreen?.call(1),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

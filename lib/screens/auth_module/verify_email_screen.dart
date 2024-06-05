@@ -7,14 +7,9 @@ import '../../constants/colors.dart';
 import '../../constants/strings.dart';
 import '../../routes/routes.dart';
 
-class VerifyEmailScreen extends StatefulWidget {
+class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key});
 
-  @override
-  State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
-}
-
-class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

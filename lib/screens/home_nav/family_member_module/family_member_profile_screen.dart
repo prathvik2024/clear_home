@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../constants/fonts.dart';
-import '../../constants/strings.dart';
-import '../../widgets/home_widgets/circular_image.dart';
+import '../../../constants/fonts.dart';
+import '../../../constants/strings.dart';
+import '../../../widgets/home_widgets/circular_image.dart';
 
 class FamilyMemberProfileScreen extends StatelessWidget {
   Map<String, dynamic>? args;

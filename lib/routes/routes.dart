@@ -1,12 +1,12 @@
-import 'package:clear_home/screens/home_nav/add_members_screen.dart';
+import 'package:clear_home/screens/home_nav/family_member_module/add_members_screen.dart';
 import 'package:clear_home/screens/dashboard_screen.dart';
 import 'package:clear_home/screens/auth_module/forgot_password_screen.dart';
 import 'package:clear_home/screens/auth_module/login_screen.dart';
 import 'package:clear_home/screens/auth_module/new_password_screen.dart';
 import 'package:clear_home/screens/auth_module/otp_verification_screen.dart';
 import 'package:clear_home/screens/auth_module/register_screen.dart';
-import 'package:clear_home/screens/home_nav/family_member_details_screen.dart';
-import 'package:clear_home/screens/home_nav/family_member_list_screen.dart';
+import 'package:clear_home/screens/home_nav/family_member_module/family_member_details_screen.dart';
+import 'package:clear_home/screens/home_nav/family_member_module/family_member_list_screen.dart';
 import 'package:clear_home/screens/meal_module/add_meal_screen.dart';
 import 'package:clear_home/screens/meal_module/meal_list_screen.dart';
 import 'package:clear_home/screens/splash_screen.dart';

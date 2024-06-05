@@ -6,15 +6,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../constants/colors.dart';
 import '../../constants/strings.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+class OtpVerificationScreen extends StatelessWidget {
+  OtpVerificationScreen({super.key});
 
-  @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-}
-
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   String getOtp = "";
+
   int otpDigit = 4;
 
   @override

@@ -22,7 +22,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  List<dynamic> bottomMenuList = [];
+  List<Map<String,dynamic>> bottomMenuList = [];
   List<DrawerModel> drawerList = [];
   bool isCategoryOpen = false, isSettingsOpen = false;
 
@@ -153,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       alignment: Alignment.topRight,
                       child: IconButton(
                           onPressed: () {
-                            _scaffoldKey.currentState!.closeDrawer();
+                            _scaffoldKey.currentState?.closeDrawer();
                           },
                           icon: Icon(
                             Icons.close,

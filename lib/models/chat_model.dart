@@ -1,5 +1,3 @@
-import 'message_model.dart';
-
 class ChatModel {
   final String personName, image;
   String? lastMessage, time;
