@@ -1,18 +1,15 @@
 import 'package:clear_home/constants/colors.dart';
-import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/constants/validator.dart';
 import 'package:clear_home/routes/routes.dart';
 import 'package:clear_home/widgets/custom_button.dart';
 import 'package:clear_home/widgets/custom_textfield.dart';
-import 'package:clear_home/widgets/show_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/custom_appbar.dart';
 
 class AddMembersScreen extends StatefulWidget {
-  AddMembersScreen({super.key});
+  const AddMembersScreen({super.key});
 
   @override
   State<AddMembersScreen> createState() => _AddMembersScreenState();
@@ -26,7 +23,7 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   void validateAddMembers() async {
     // if (_formKey.currentState!.validate()) {
@@ -35,15 +32,6 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
     args = await Navigator.pushNamed(context, AppRoutes.familyMemberList) as Map<String, dynamic>;
     setState(() {});
     // }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    // WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-    //   widget.args = ModalRoute.of(context)?.settings.arguments as Map<String, bool>;
-    // });
   }
 
   @override
@@ -66,7 +54,7 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
                   hintText: AppStrings.hintName,
                   validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isAlpha, errorMsg: AppStrings.nameError),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 CustomTextField(
@@ -75,7 +63,7 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
                   hintText: AppStrings.hintRelation,
                   validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isAlpha, errorMsg: AppStrings.relationError),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 CustomTextField(
@@ -84,7 +72,7 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
                   hintText: AppStrings.hintPhone,
                   validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isPhone),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 CustomTextField(
@@ -93,10 +81,13 @@ class _AddMembersScreenState extends State<AddMembersScreen> {
                   hintText: AppStrings.hintEmail,
                   validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isEmail),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
-                CustomButton(label: (args?["isEdit"] ?? false) ? AppStrings.saveStr : AppStrings.addMemberBtnStr, onClick: validateAddMembers)
+                CustomButton(label: (args?["isEdit"] ?? false) ? AppStrings.saveStr : AppStrings.addMemberBtnStr, onClick: validateAddMembers),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),

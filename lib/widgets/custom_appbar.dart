@@ -23,7 +23,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       leading: IconButton(
         onPressed: backClick ?? () => Navigator.pop(context),
-        icon: Icon(
+        icon: const Icon(
           Icons.keyboard_backspace_rounded,
           color: AppColors.kDarkBlue,
           size: 22,

@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../constants/colors.dart';
+import '../../constants/data_provider.dart';
 import '../../constants/fonts.dart';
+import '../../constants/helper.dart';
 import '../../constants/strings.dart';
 import '../../constants/validator.dart';
 import '../../widgets/custom_textfield.dart';
@@ -21,23 +23,21 @@ class AddTravelChecklistScreen extends StatefulWidget {
 class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
   Map<String, dynamic>? args;
   bool isEdit = false;
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController destinationNameController = TextEditingController();
   TextEditingController travelStartDateController = TextEditingController();
   TextEditingController travelEndDateController = TextEditingController();
   TextEditingController travelDueTimeController = TextEditingController();
   TextEditingController addItemNameController = TextEditingController();
 
-  MultiSelectController _multiSelectController = MultiSelectController();
+  final MultiSelectController _multiSelectController = MultiSelectController();
   String? startDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now()),
       endDate = DateFormat(AppStrings.dateFormatStr).format(DateTime.now());
   String? startTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now()),
       endTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now());
 
-  List<String> assigneeList = ["Family Member 1", "Family Member 2", "Family Member 3", "Family Member 4"];
   List<String> selectedAssignee = [];
   List<String> itemList = [];
-  List<String> taskStatusList = [AppStrings.pendingStr, AppStrings.inProgressStr, AppStrings.completedStr];
   int taskStatus = 0;
 
   validateTravelChecklist() {
@@ -51,19 +51,22 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timestamp) {
       args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      if (args?["isEdit"] != null) {
-        isEdit = true;
-      } else {
-        isEdit = false;
-      }
+      isEdit = args?["isEdit"] != null;
       setState(() {});
     });
   }
 
+  void addItem() {
+    if (addItemNameController.text.trim().isNotEmpty) {
+      itemList.add(addItemNameController.text);
+      addItemNameController.clear();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
       appBar: CustomAppbar(
@@ -71,7 +74,7 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(left: 21, right: 21, top: 15),
+          padding: const EdgeInsets.only(left: 21, right: 21, top: 15),
           child: Form(
             key: _formKey,
             child: Column(
@@ -88,21 +91,20 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                               Validator.validate(input: input, type: ValidationType.isAlpha, errorMsg: AppStrings.nameError),
                           hintText: AppStrings.hintName,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Text(
                           AppStrings.travelDateStr,
                           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: width * 0.43,
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -110,13 +112,13 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                     AppStrings.startStr,
                                     style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   CustomTextField(
-                                    enabled: false,
+                                    readOnly: true,
                                     onClick: () async {
-                                      startDate = await selectDate();
+                                      startDate = await Helper.selectDate(context) ?? startDate;
                                       setState(() {});
                                     },
                                     controller: travelStartDateController,
@@ -134,8 +136,10 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: width * 0.43,
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -143,13 +147,13 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                     AppStrings.endStr,
                                     style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   CustomTextField(
-                                    enabled: false,
+                                    readOnly: true,
                                     onClick: () async {
-                                      endDate = await selectDate();
+                                      endDate = await Helper.selectDate(context) ?? endDate;
                                       setState(() {});
                                     },
                                     contentPadding: EdgeInsets.zero,
@@ -170,22 +174,22 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Text(
                           AppStrings.dueTimeStr,
                           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          width: width * 0.35,
+                        SizedBox(
+                          width: size.width * 0.35,
                           child: CustomTextField(
-                            enabled: false,
+                            readOnly: true,
                             onClick: () async {
-                              startTime = await selectTime();
+                              startTime = await Helper.selectTime(context) ?? startTime;
                               setState(() {});
                             },
                             controller: travelDueTimeController,
@@ -201,49 +205,23 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Text(
                           AppStrings.itemNameStr,
                           style: AppFonts.kPoppinsMedium.copyWith(color: Colors.black, fontSize: 14),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
-                        ),
-                        CustomTextField(
-                          controller: addItemNameController,
-                          suffixIcon: Container(
-                            margin: EdgeInsets.all(6),
-                            width: 38,
-                            height: 38,
-                            child: IconButton(
-                              onPressed: () {
-                                if (addItemNameController.text.trim().isNotEmpty) {
-                                  itemList.insert(0, addItemNameController.text);
-                                  addItemNameController.clear();
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                color: AppColors.kDarkBlue,
-                              ),
-                            ),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(19), color: AppColors.kDarkBlue.withOpacity(0.10)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 4,
                         ),
                         Column(
                           children: List.generate(
                             itemList.length,
                             (index) {
                               return Container(
-                                margin: EdgeInsets.symmetric(vertical: 4),
-                                width: width,
-                                padding: EdgeInsets.only(
+                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                padding: const EdgeInsets.only(
                                   top: 5,
                                   bottom: 5,
                                   left: 15,
@@ -257,9 +235,11 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                       style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 6),
+                                      margin: const EdgeInsets.symmetric(horizontal: 6),
                                       width: 38,
                                       height: 38,
+                                      decoration:
+                                          BoxDecoration(borderRadius: BorderRadius.circular(19), color: AppColors.kDarkBlue.withOpacity(0.10)),
                                       child: IconButton(
                                         onPressed: () {
                                           itemList.removeAt(index);
@@ -273,8 +253,6 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                           ),
                                         ),
                                       ),
-                                      decoration:
-                                          BoxDecoration(borderRadius: BorderRadius.circular(19), color: AppColors.kDarkBlue.withOpacity(0.10)),
                                     ),
                                   ],
                                 ),
@@ -282,7 +260,26 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                             },
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        CustomTextField(
+                          controller: addItemNameController,
+                          suffixIcon: Container(
+                            margin: const EdgeInsets.all(6),
+                            width: 38,
+                            height: 38,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(19), color: AppColors.kDarkBlue.withOpacity(0.10)),
+                            child: IconButton(
+                              onPressed: addItem,
+                              icon: const Icon(
+                                Icons.add,
+                                color: AppColors.kDarkBlue,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
                         MultiSelectDropDown(
@@ -300,7 +297,7 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                           selectedOptionTextColor: AppColors.kLiteBlue,
                           borderColor: Colors.transparent,
                           borderWidth: 0,
-                          options: assigneeList.map((item) {
+                          options: DataProvider.assigneeList.map((item) {
                             return ValueItem(
                               label: item,
                               value: item,
@@ -308,11 +305,11 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                           }).toList(),
                           selectionType: SelectionType.multi,
                           optionTextStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
-                          chipConfig: ChipConfig(
+                          chipConfig: const ChipConfig(
                             backgroundColor: AppColors.kLiteBlue,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         if (isEdit) ...[
@@ -320,21 +317,20 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                             AppStrings.taskStatusStr,
                             style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: List.generate(
-                              taskStatusList.length,
+                              DataProvider.taskStatusList.length,
                               (index) {
-                                return Container(
-                                  width: width * 0.28,
+                                return Expanded(
                                   child: ListTile(
                                     dense: true,
                                     horizontalTitleGap: 2,
-                                    visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                    visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
                                     contentPadding: EdgeInsets.zero,
                                     leading: Radio(
                                       activeColor: AppColors.kDarkBlue,
@@ -347,7 +343,7 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                                       },
                                     ),
                                     title: Text(
-                                      taskStatusList[index],
+                                      DataProvider.taskStatusList[index],
                                       style: AppFonts.kPoppinsRegular.copyWith(fontSize: 13, color: Colors.black.withOpacity(0.6)),
                                     ),
                                   ),
@@ -360,7 +356,7 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -369,42 +365,42 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
                     Expanded(
                         child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        AppStrings.cancelStr,
-                        style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: AppColors.kDarkBlue),
-                      ),
                       style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.all(12),
-                          side: BorderSide(
+                          padding: const EdgeInsets.all(12),
+                          side: const BorderSide(
                             color: AppColors.kDarkBlue,
                           ),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                             30,
                           ))),
+                      child: Text(
+                        AppStrings.cancelStr,
+                        style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: AppColors.kDarkBlue),
+                      ),
                     )),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
                         child: OutlinedButton(
                       onPressed: validateTravelChecklist,
-                      child: Text(
-                        AppStrings.saveStr,
-                        style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
-                      ),
                       style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           backgroundColor: AppColors.kLiteBlue,
-                          side: BorderSide(color: Colors.transparent),
+                          side: const BorderSide(color: Colors.transparent),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                             30,
                           ))),
+                      child: Text(
+                        AppStrings.saveStr,
+                        style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
+                      ),
                     ))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 )
               ],
@@ -413,35 +409,5 @@ class _AddTravelChecklistScreenState extends State<AddTravelChecklistScreen> {
         ),
       ),
     );
-  }
-
-  Future<String?> selectDate() async {
-    final DateTime? pickDate =
-        await showDatePicker(context: context, firstDate: DateTime.now(), initialDate: DateTime.now(), lastDate: DateTime(2025));
-    if (pickDate != null) {
-      return DateFormat(AppStrings.dateFormatStr).format(pickDate);
-    } else {
-      ShowToast(msg: "Something went wrong!");
-      return null;
-    }
-  }
-
-  Future<String?> selectTime() async {
-    final TimeOfDay? pickTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (pickTime != null) {
-      return DateFormat(AppStrings.timeFormatStr)
-          .format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, pickTime.hour, pickTime.minute));
-    } else {
-      ShowToast(msg: "Something went wrong!");
-      return null;
-    }
-  }
-
-  List<String> getAssignee(List<ValueItem> input) {
-    List<String> result = [];
-    input.forEach((item) {
-      result.add(item.value);
-    });
-    return result;
   }
 }

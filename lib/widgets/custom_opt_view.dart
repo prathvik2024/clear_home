@@ -41,7 +41,7 @@ class _CustomOptViewState extends State<CustomOptView> {
                 cursorColor: AppColors.kDarkBlue,
                 style: AppFonts.kPoppinsMedium.copyWith(fontSize: 22),
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),

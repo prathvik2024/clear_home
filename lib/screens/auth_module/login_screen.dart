@@ -22,21 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isSecure = true;
 
-  GlobalKey<FormState> _loginFormKey = GlobalKey();
-
-  String? validateEmail(input) {
-    if (!Validator.isEmail(input: input!.trim())) {
-      return AppStrings.emailError;
-    }
-    return null;
-  }
-
-  String? validatePassword(input) {
-    if (!Validator.isStrongPassword(input: input!.trim())) {
-      return AppStrings.passwordError;
-    }
-    return null;
-  }
+  final GlobalKey<FormState> _loginFormKey = GlobalKey();
 
   void togglePassword() {
     isSecure = !isSecure;
@@ -53,98 +39,111 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(gradient: AppColors.kGradientSplash),
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.3, child: SvgPicture.asset(AppStrings.svgSmLogo)),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.7,
-                decoration:
-                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          AppStrings.loginStr,
-                          style: AppFonts.kPoppinsMedium.copyWith(
-                            fontSize: 22,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: IntrinsicHeight(
+                child: Container(
+                    decoration: const BoxDecoration(gradient: AppColors.kGradientSplash),
+                    child: Column(
+                      children: [
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.3, child: SvgPicture.asset(AppStrings.svgSmLogo)),
+                        Expanded(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      AppStrings.loginStr,
+                                      style: AppFonts.kPoppinsMedium.copyWith(
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Form(
+                                      key: _loginFormKey,
+                                      child: Column(
+                                        children: [
+                                          CustomTextField(
+                                            textLabel: AppStrings.emailStr,
+                                            controller: emailController,
+                                            hintText: AppStrings.hintEmail,
+                                            validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isEmail),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          CustomTextField(
+                                            textLabel: AppStrings.passwordStr,
+                                            controller: passwordController,
+                                            hintText: AppStrings.hintPassword,
+                                            validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isStrongPassword),
+                                            maxLines: 1,
+                                            suffixIcon: InkWell(
+                                              onTap: togglePassword,
+                                              child: Icon(
+                                                isSecure ? CupertinoIcons.eye_slash_fill : Icons.remove_red_eye_rounded,
+                                                color: Colors.black.withOpacity(0.15),
+                                              ),
+                                            ),
+                                            isSecure: isSecure,
+                                          ),
+                                        ],
+                                      )),
+                                  Align(
+                                      alignment: Alignment.topRight,
+                                      child: TextButton(
+                                          onPressed: () => Navigator.pushNamed(context, AppRoutes.forgotPassword),
+                                          child: Text(
+                                            AppStrings.forgotPasswordStr,
+                                            style: AppFonts.kPoppinsMedium.copyWith(
+                                              fontSize: 16,
+                                              color: AppColors.kDarkBlue,
+                                            ),
+                                          ))),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  CustomButton(
+                                    label: AppStrings.loginStr,
+                                    onClick: loginUser,
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  const Spacer(),
+                                  Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: CustomRichText(
+                                        onClick: navigateRegister,
+                                        firstText: AppStrings.dontAccountStr,
+                                        secondText: AppStrings.signUpStr,
+                                      ))
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Form(
-                          key: _loginFormKey,
-                          child: Column(
-                            children: [
-                              CustomTextField(
-                                textLabel: AppStrings.emailStr,
-                                controller: emailController,
-                                hintText: AppStrings.hintEmail,
-                                validationCallback: validateEmail,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              CustomTextField(
-                                textLabel: AppStrings.passwordStr,
-                                controller: passwordController,
-                                hintText: AppStrings.hintPassword,
-                                validationCallback: validatePassword,
-                                maxLines: 1,
-                                isPassword: true,
-                                suffixIcon: Icon(
-                                  isSecure ? CupertinoIcons.eye_slash_fill : Icons.remove_red_eye_rounded,
-                                  color: Colors.black.withOpacity(0.15),
-                                ),
-                                onTogglePassword: togglePassword,
-                                isSecure: isSecure,
-                              ),
-                            ],
-                          )),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: TextButton(
-                              onPressed: () => Navigator.pushNamed(context, AppRoutes.forgotPassword),
-                              child: Text(
-                                AppStrings.forgotPasswordStr,
-                                style: AppFonts.kPoppinsMedium.copyWith(
-                                  fontSize: 16,
-                                  color: AppColors.kDarkBlue,
-                                ),
-                              ))),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      CustomButton(
-                        label: AppStrings.loginStr,
-                        onClick: loginUser,
-                      ),
-                      Spacer(),
-                      Align(
-                          alignment: Alignment.bottomCenter,
-                          child: CustomRichText(
-                            onClick: navigateRegister,
-                            firstText: AppStrings.dontAccountStr,
-                            secondText: AppStrings.signUpStr,
-                          ))
-                    ],
-                  ),
-                ),
+                      ],
+                    )),
               ),
-            ],
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

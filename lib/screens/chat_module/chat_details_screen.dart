@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:clear_home/constants/data_provider.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/models/chat_model.dart';
 import 'package:clear_home/widgets/custom_textfield.dart';
@@ -22,24 +21,19 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   Map<String, dynamic>? args;
   ChatModel? chatModel;
   TextEditingController messageController = TextEditingController();
-
-  List<MessageModel> messageModel = [
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel("Hii My name is prathvik", "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("what are you doing?", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-  ];
+  ScrollController controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    messageModel.addAll([...messageModel.reversed]);
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timestamp) {
+      if (controller.hasClients) {
+        final position = controller.position.maxScrollExtent + 50;
+        controller.animateTo(position, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+      }
       args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       if (args?["modelData"] != null) {
-        chatModel = args?["modelData"] ?? null;
+        chatModel = args?["modelData"];
       }
       setState(() {});
     });
@@ -47,8 +41,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
@@ -57,16 +50,17 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: height * 0.10,
+              height: size.height * 0.10,
               child: Card(
                 margin: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))),
+                shape:
+                    const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))),
                 color: Colors.white,
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.keyboard_backspace_rounded,
                         color: AppColors.kDarkBlue,
                         size: 25,
@@ -83,28 +77,24 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                               fit: BoxFit.cover,
                             ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      width: width * 0.55,
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            chatModel?.personName ?? "David Smith",
-                            overflow: TextOverflow.ellipsis,
-                            style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
-                          ),
-                          Text(
-                            "Online",
-                            overflow: TextOverflow.ellipsis,
-                            style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.green),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          chatModel?.personName ?? AppStrings.demoNameStr,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
+                        ),
+                        Text(
+                          "Online",
+                          overflow: TextOverflow.ellipsis,
+                          style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.green),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -112,14 +102,15 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
             ),
             Expanded(
               child: ListView.builder(
+                controller: controller,
                 itemBuilder: (context, index) {
                   return Container(
-                      padding: EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
                       child: Align(
-                        alignment: (messageModel[index].isSender) ? Alignment.centerRight : Alignment.centerLeft,
+                        alignment: (DataProvider.messageModel[index].isSender) ? Alignment.centerRight : Alignment.centerLeft,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          textDirection: (messageModel[index].isSender) ? TextDirection.rtl : TextDirection.ltr,
+                          textDirection: (DataProvider.messageModel[index].isSender) ? TextDirection.rtl : TextDirection.ltr,
                           children: [
                             CircularImage(
                               imageWidget: (chatModel?.image.isNotEmpty ?? false) // if(args != null && args["image"] != null)
@@ -132,30 +123,30 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                       fit: BoxFit.cover,
                                     ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: width * 0.60),
+                              constraints: BoxConstraints(maxWidth: size.width * 0.60),
                               child: Column(
-                                crossAxisAlignment: (messageModel[index].isSender) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                crossAxisAlignment: (DataProvider.messageModel[index].isSender) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: (messageModel[index].isSender) ? AppColors.kLiteBlue : Colors.white),
+                                        color: (DataProvider.messageModel[index].isSender) ? AppColors.kLiteBlue : Colors.white),
                                     child: Text(
-                                      messageModel[index].message,
+                                      DataProvider.messageModel[index].message,
                                       style: AppFonts.kPoppinsRegular
-                                          .copyWith(fontSize: 12, color: (messageModel[index].isSender) ? Colors.white : Colors.black),
+                                          .copyWith(fontSize: 12, color: (DataProvider.messageModel[index].isSender) ? Colors.white : Colors.black),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Row(
-                                    mainAxisAlignment: (messageModel[index].isSender) ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                    mainAxisAlignment: (DataProvider.messageModel[index].isSender) ? MainAxisAlignment.end : MainAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(right: 8, left: 4),
@@ -164,7 +155,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                           style: AppFonts.kPoppinsRegular.copyWith(fontSize: 12, color: AppColors.kGray),
                                         ),
                                       ),
-                                      if (messageModel[index].isSender) ...[
+                                      if (DataProvider.messageModel[index].isSender) ...[
                                         Padding(
                                           padding: const EdgeInsets.only(right: 8.0),
                                           child: SvgPicture.asset(
@@ -181,9 +172,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         ),
                       ));
                 },
-                itemCount: messageModel.length,
+                itemCount: DataProvider.messageModel.length,
                 shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
               ),
             ),
             Container(
@@ -193,7 +184,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                 children: [
                   Expanded(
                     child: CustomTextField(
-                      focusBorderSide: BorderSide(color: Colors.transparent),
+                      focusBorderSide: const BorderSide(color: Colors.transparent),
                       maxLines: 3,
                       minLines: 1,
                       bgColor: Colors.white,
@@ -219,16 +210,28 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColors.kDarkBlue),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        AppStrings.svgSend,
+                  InkWell(
+                    onTap: () {
+                      if (messageController.text.trim().isNotEmpty) {
+                        final position = controller.position.maxScrollExtent + 80;
+                        controller.animateTo(position, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+                        DataProvider.messageModel
+                            .add(MessageModel(messageController.text, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true));
+                        messageController.clear();
+                      }
+                      setState(() {});
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColors.kDarkBlue),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AppStrings.svgSend,
+                        ),
                       ),
                     ),
                   )

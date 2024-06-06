@@ -21,7 +21,7 @@ class RecentListCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: shrinkWrap,
-      physics: physics ?? BouncingScrollPhysics(),
+      physics: physics ?? const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         return InkWell(
@@ -29,20 +29,20 @@ class RecentListCardView extends StatelessWidget {
             Navigator.pushNamed(context, AppRoutes.taskDetails, arguments: {"modelData": recentTaskList[index], "taskType": taskType.toString()});
           },
           child: Card(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),
               child: Row(
                 children: [
                   ClipRRect(
                     child: Container(
                       decoration: BoxDecoration(color: AppColors.kHomeBg, borderRadius: BorderRadius.circular(40)),
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: SvgPicture.asset(recentTaskList[index].icon),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Column(
@@ -61,7 +61,7 @@ class RecentListCardView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     recentTaskList[index].personName,
                     style: AppFonts.kPoppinsRegular.copyWith(

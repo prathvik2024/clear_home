@@ -15,12 +15,12 @@ class CustomButton extends StatelessWidget {
         child: ElevatedButton(
           iconAlignment: IconAlignment.start,
           onPressed: onClick,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.kLiteBlue, padding: const EdgeInsets.all(12), elevation: 4, shadowColor: AppColors.kLiteBlue),
           child: Text(
             label,
             style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
           ),
-          style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.kLiteBlue, padding: EdgeInsets.all(12), elevation: 4, shadowColor: AppColors.kLiteBlue),
         ));
   }
 }

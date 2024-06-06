@@ -19,7 +19,7 @@ class CustomDialog extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 35,
             left: 25,
             right: 25,
@@ -29,7 +29,7 @@ class CustomDialog extends StatelessWidget {
             children: [
               if (lottie != null) ...[
                 Lottie.asset(lottie!, width: 200, height: 200),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               ],
@@ -41,7 +41,7 @@ class CustomDialog extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               ],
@@ -53,21 +53,21 @@ class CustomDialog extends StatelessWidget {
                         width: width * 0.25,
                         child: OutlinedButton(
                           onPressed: negativeOnclick,
-                          child: Text(
-                            negativeButtonName ?? AppStrings.noButtonStr,
-                            style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: AppColors.kDarkBlue),
-                          ),
                           style: OutlinedButton.styleFrom(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 color: AppColors.kDarkBlue,
                               ),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                 30,
                               ))),
+                          child: Text(
+                            negativeButtonName ?? AppStrings.noButtonStr,
+                            style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: AppColors.kDarkBlue),
+                          ),
                         )),
                   ],
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   if (positiveOnclick != null) ...[
@@ -75,22 +75,22 @@ class CustomDialog extends StatelessWidget {
                         width: width * 0.25,
                         child: OutlinedButton(
                           onPressed: positiveOnclick,
-                          child: Text(
-                            positiveButtonName ?? AppStrings.yesButtonStr,
-                            style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
-                          ),
                           style: OutlinedButton.styleFrom(
                               backgroundColor: AppColors.kLiteBlue,
-                              side: BorderSide(color: Colors.transparent),
+                              side: const BorderSide(color: Colors.transparent),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                 30,
                               ))),
+                          child: Text(
+                            positiveButtonName ?? AppStrings.yesButtonStr,
+                            style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
+                          ),
                         ))
                   ],
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               )
             ],

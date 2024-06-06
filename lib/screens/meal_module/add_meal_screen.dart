@@ -1,3 +1,4 @@
+import 'package:clear_home/constants/data_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
+import '../../constants/helper.dart';
 import '../../constants/strings.dart';
 import '../../constants/validator.dart';
 import '../../models/meal_task_model.dart';
@@ -26,24 +28,10 @@ class _AddMealScreenState extends State<AddMealScreen> {
       endTime = DateFormat(AppStrings.timeFormatStr).format(DateTime.now());
   TextEditingController mealDateController = TextEditingController();
 
-  List<String> daysName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  List<String> assigneeList = ["Family Member 1", "Family Member 2", "Family Member 3", "Family Member 4"];
   int selectedIndex = 0;
-  List<MealTaskModel> mealTaskList = [
-    MealTaskModel(
-        TextEditingController(),
-        TextEditingController(text: DateFormat(AppStrings.timeFormatStr).format(DateTime.now())),
-        TextEditingController(text: DateFormat(AppStrings.timeFormatStr).format(DateTime.now())),
-        TextEditingController(),
-        MultiSelectController(),
-        false,
-        null)
-  ];
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
       appBar: CustomAppbar(
@@ -64,15 +52,15 @@ class _AddMealScreenState extends State<AddMealScreen> {
                           AppStrings.mealDateStr,
                           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.black),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         SizedBox(
-                          width: width * 0.4,
+                          width: 150,
                           child: CustomTextField(
-                            enabled: false,
+                            readOnly: true,
                             onClick: () async {
-                              startDate = await selectDate();
+                              startDate = await Helper.selectDate(context) ?? startDate;
                               setState(() {});
                             },
                             controller: mealDateController,
@@ -90,11 +78,11 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                       decoration: BoxDecoration(
                         color: AppColors.kDarkBlue.withOpacity(0.08),
                         borderRadius: BorderRadius.circular(40),
@@ -102,19 +90,19 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
-                          daysName.length,
+                          DataProvider.daysName.length,
                           (index) {
                             return TextButton(
                               style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-                                  visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+                                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                                   minimumSize: Size.zero),
                               onPressed: () {
                                 selectedIndex = index;
                                 setState(() {});
                               },
                               child: Text(
-                                daysName[index],
+                                DataProvider.daysName[index],
                                 style: AppFonts.kPoppinsRegular
                                     .copyWith(fontSize: 14, color: (selectedIndex == index) ? AppColors.kDarkBlue : Colors.black),
                               ),
@@ -123,12 +111,12 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     Column(
                       children: List.generate(
-                        mealTaskList.length,
+                        DataProvider.mealTaskList.length,
                         (index) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,32 +124,31 @@ class _AddMealScreenState extends State<AddMealScreen> {
                               CustomTextField(
                                 onChange: (input) {
                                   if (Validator.isAlpha(input: input.trim())) {
-                                    mealTaskList[index].errorMessage = null;
+                                    DataProvider.mealTaskList[index].errorMessage = null;
                                   } else {
-                                    mealTaskList[index].errorMessage = AppStrings.nameError;
+                                    DataProvider.mealTaskList[index].errorMessage = AppStrings.nameError;
                                   }
                                   setState(() {});
                                 },
-                                errorText: mealTaskList[index].errorMessage,
-                                controller: mealTaskList[index].mealTitleController,
+                                errorText: DataProvider.mealTaskList[index].errorMessage,
+                                controller: DataProvider.mealTaskList[index].mealTitleController,
                                 textLabel: AppStrings.mealTitleStr,
                                 hintText: AppStrings.hintName,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Text(
                                 AppStrings.timeStr,
                                 style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 6,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    width: width * 0.43,
+                                  Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -169,18 +156,18 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                           AppStrings.startStr,
                                           style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
                                         CustomTextField(
-                                          enabled: false,
+                                          readOnly: true,
                                           onClick: () async {
-                                            startTime = await selectTime();
-                                            mealTaskList[index].mealStartTimeController.text = startTime ?? "";
+                                            startTime = await Helper.selectTime(context) ?? startTime;
+                                            DataProvider.mealTaskList[index].mealStartTimeController.text = startTime ?? "";
                                             setState(() {});
                                           },
-                                          controller: mealTaskList[index].mealStartTimeController,
-                                          hintText: mealTaskList[index].mealStartTimeController.text,
+                                          controller: DataProvider.mealTaskList[index].mealStartTimeController,
+                                          hintText: DataProvider.mealTaskList[index].mealStartTimeController.text,
                                           prefixIcon: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
                                             child: SvgPicture.asset(
@@ -194,8 +181,10 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    width: width * 0.43,
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -203,19 +192,19 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                           AppStrings.endStr,
                                           style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
                                         CustomTextField(
-                                          enabled: false,
+                                          readOnly: true,
                                           onClick: () async {
-                                            endTime = await selectTime();
-                                            mealTaskList[index].mealEndTimeController.text = endTime ?? "";
+                                            endTime = await Helper.selectTime(context) ?? endTime;
+                                            DataProvider.mealTaskList[index].mealEndTimeController.text = endTime ?? "";
                                             setState(() {});
                                           },
                                           contentPadding: EdgeInsets.zero,
-                                          controller: mealTaskList[index].mealEndTimeController,
-                                          hintText: mealTaskList[index].mealEndTimeController.text,
+                                          controller: DataProvider.mealTaskList[index].mealEndTimeController,
+                                          hintText: DataProvider.mealTaskList[index].mealEndTimeController.text,
                                           prefixIcon: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
                                             child: SvgPicture.asset(
@@ -231,22 +220,22 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
                               CustomTextField(
-                                controller: mealTaskList[index].mealMenuDetailsController,
+                                controller: DataProvider.mealTaskList[index].mealMenuDetailsController,
                                 keyboardType: TextInputType.multiline,
                                 textLabel: AppStrings.mealDetailsStr,
                                 minLines: 4,
                                 maxLines: 8,
                                 borderRadius: 15,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
                               MultiSelectDropDown(
-                                controller: mealTaskList[index].multiSelectController,
+                                controller: DataProvider.mealTaskList[index].multiSelectController,
                                 inputDecoration: BoxDecoration(
                                     color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(40),
@@ -260,7 +249,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                 selectedOptionTextColor: AppColors.kLiteBlue,
                                 borderColor: Colors.transparent,
                                 borderWidth: 0,
-                                options: assigneeList.map((item) {
+                                options: DataProvider.assigneeList.map((item) {
                                   return ValueItem(
                                     label: item,
                                     value: item,
@@ -268,20 +257,20 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                 }).toList(),
                                 selectionType: SelectionType.multi,
                                 optionTextStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
-                                chipConfig: ChipConfig(
+                                chipConfig: const ChipConfig(
                                   backgroundColor: AppColors.kLiteBlue,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (mealTaskList[index].isDelete) {
-                                    mealTaskList.removeAt(index);
+                                  if (DataProvider.mealTaskList[index].isDelete) {
+                                    DataProvider.mealTaskList.removeAt(index);
                                   } else {
-                                    if (mealTaskList[index].mealTitleController.text.trim().isNotEmpty) {
-                                      mealTaskList.add(MealTaskModel(
+                                    if (DataProvider.mealTaskList[index].mealTitleController.text.trim().isNotEmpty) {
+                                      DataProvider.mealTaskList.add(MealTaskModel(
                                           TextEditingController(),
                                           TextEditingController(
                                             text: DateFormat(AppStrings.timeFormatStr).format(DateTime.now()),
@@ -291,9 +280,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                           MultiSelectController(),
                                           false,
                                           null));
-                                      mealTaskList[index].isDelete = true;
+                                      DataProvider.mealTaskList[index].isDelete = true;
                                     } else {
-                                      mealTaskList[index].errorMessage = AppStrings.nameError;
+                                      DataProvider.mealTaskList[index].errorMessage = AppStrings.nameError;
                                     }
                                   }
                                   setState(() {});
@@ -303,20 +292,20 @@ class _AddMealScreenState extends State<AddMealScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      mealTaskList[index].isDelete ? AppStrings.deleteStr : AppStrings.addMoreStr,
+                                      DataProvider.mealTaskList[index].isDelete ? AppStrings.deleteStr : AppStrings.addMoreStr,
                                       style: AppFonts.kPoppinsMedium.copyWith(color: AppColors.kDarkBlue, fontSize: 14),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Icon(
-                                      mealTaskList[index].isDelete ? CupertinoIcons.minus_circle : CupertinoIcons.plus_circled,
+                                      DataProvider.mealTaskList[index].isDelete ? CupertinoIcons.minus_circle : CupertinoIcons.plus_circled,
                                       color: AppColors.kDarkBlue,
                                     )
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],
@@ -333,34 +322,12 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 onClick: () {
                   ShowToast(msg: "Done");
                 }),
-            SizedBox(
+            const SizedBox(
               height: 20,
             )
           ],
         ),
       ),
     );
-  }
-
-  Future<String?> selectTime() async {
-    final TimeOfDay? pickTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (pickTime != null) {
-      return DateFormat(AppStrings.timeFormatStr)
-          .format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, pickTime.hour, pickTime.minute));
-    } else {
-      ShowToast(msg: "Something went wrong!");
-      return null;
-    }
-  }
-
-  Future<String?> selectDate() async {
-    final DateTime? pickDate =
-        await showDatePicker(context: context, firstDate: DateTime.now(), initialDate: DateTime.now(), lastDate: DateTime(2025));
-    if (pickDate != null) {
-      return DateFormat(AppStrings.dateFormatStr).format(pickDate);
-    } else {
-      ShowToast(msg: "Something went wrong!");
-      return null;
-    }
   }
 }

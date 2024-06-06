@@ -1,14 +1,14 @@
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
-import 'package:clear_home/routes/routes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants/data_provider.dart';
 import '../../../models/recent_task_model.dart';
 import '../../../widgets/home_widgets/recent_list_card_view.dart';
 
 class FamilyMemberTaskScreen extends StatefulWidget {
-  FamilyMemberTaskScreen({super.key});
+  const FamilyMemberTaskScreen({super.key});
 
   @override
   State<FamilyMemberTaskScreen> createState() => _FamilyMemberTaskScreenState();
@@ -16,28 +16,9 @@ class FamilyMemberTaskScreen extends StatefulWidget {
 
 class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
   int selectedIndex = 0;
-  List<RecentTaskModel> recentTaskList = [
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-    RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),
-    RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
-    RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Padding(
@@ -48,7 +29,7 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: Size(double.minPositive, 30)),
+                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: const Size(double.minPositive, 30)),
                   onPressed: () {
                     selectedIndex = 0;
                     setState(() {});
@@ -60,7 +41,7 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
                         : AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 VerticalDivider(
@@ -68,12 +49,12 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
                     0.08,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: Size(double.minPositive, 30)),
+                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: const Size(double.minPositive, 30)),
                   onPressed: () {
                     selectedIndex = 1;
                     setState(() {});
@@ -85,7 +66,7 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
                         : AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 VerticalDivider(
@@ -93,12 +74,12 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
                     0.08,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: Size(double.minPositive, 30)),
+                      padding: EdgeInsets.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: const Size(double.minPositive, 30)),
                   onPressed: () {
                     selectedIndex = 2;
                     setState(() {});
@@ -116,13 +97,13 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
         ),
         Expanded(
           child: Container(
-              child: () {
+            child: () {
               if (selectedIndex == 1) {
-                return UpcomingTask();
+                return upcomingTask();
               } else if (selectedIndex == 2) {
-                return PastTask();
+                return pastTask();
               } else {
-                return TodayTask();
+                return todayTask();
               }
             }(),
           ),
@@ -133,25 +114,25 @@ class _FamilyMemberTaskScreenState extends State<FamilyMemberTaskScreen> {
     );
   }
 
-  Widget TodayTask() {
+  Widget todayTask() {
     return RecentListCardView(
-      recentTaskList: recentTaskList,
+      recentTaskList: DataProvider.recentTaskList,
       taskType: TaskType.TodayTask,
     );
   }
 
-  Widget UpcomingTask() {
-    recentTaskList = [...recentTaskList.reversed];
+  Widget upcomingTask() {
+    DataProvider.recentTaskList = [...DataProvider.recentTaskList.reversed];
     return RecentListCardView(
-      recentTaskList: recentTaskList,
+      recentTaskList: DataProvider.recentTaskList,
       taskType: TaskType.UpcomingTask,
     );
   }
 
-  Widget PastTask() {
-    recentTaskList = [...recentTaskList.reversed];
+  Widget pastTask() {
+    DataProvider.recentTaskList = [...DataProvider.recentTaskList.reversed];
     return RecentListCardView(
-      recentTaskList: recentTaskList,
+      recentTaskList: DataProvider.recentTaskList,
       taskType: TaskType.PastTask,
     );
   }

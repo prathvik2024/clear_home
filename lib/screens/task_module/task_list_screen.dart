@@ -8,9 +8,9 @@ import '../home_nav/family_member_module/family_member_profile_screen.dart';
 import '../home_nav/family_member_module/family_member_task_screen.dart';
 
 class TaskListScreen extends StatefulWidget {
-  Function(int index)? backScreen;
+  final Function(String)? backScreen;
 
-  TaskListScreen({super.key, this.backScreen});
+  const TaskListScreen({super.key, this.backScreen});
 
   @override
   State<TaskListScreen> createState() => _TaskListScreenState();
@@ -41,13 +41,13 @@ class _TaskListScreenState extends State<TaskListScreen> with SingleTickerProvid
       appBar: CustomAppbar(
         screenName: AppStrings.taskListStr,
         backClick: () {
-          widget.backScreen?.call(0) ?? null;
+          widget.backScreen?.call(AppStrings.homeStr);
         },
         actionWidgets: [
           IconButton(
               onPressed: () {},
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 8),
                 child: Icon(
                   Icons.search_rounded,
                   color: AppColors.kDarkBlue,
@@ -60,7 +60,7 @@ class _TaskListScreenState extends State<TaskListScreen> with SingleTickerProvid
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomTabview(
@@ -72,14 +72,14 @@ class _TaskListScreenState extends State<TaskListScreen> with SingleTickerProvid
             Expanded(
                 child: PageView(
               scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               controller: _pageController,
-              onPageChanged: (num) {
-                selectedTabIndex = num;
-                tabController.index = num;
+              onPageChanged: (tab) {
+                selectedTabIndex = tab;
+                tabController.index = tab;
                 setState(() {});
               },
-              children: [FamilyMemberProfileScreen(), FamilyMemberTaskScreen()],
+              children: const [FamilyMemberProfileScreen(), FamilyMemberTaskScreen()],
             ))
           ],
         ),

@@ -1,6 +1,8 @@
+
 enum TaskType { TodayTask, UpcomingTask, PastTask }
 
 class AppStrings {
+
   static const String appName = "Clear Home";
   static const String iconPath = "assets/icons/";
   static const String imagePath = "assets/images/";
@@ -10,9 +12,15 @@ class AppStrings {
   static const String timeFormatStr = "hh:mm a";
 
   static const String loginStr = "Login";
+  static const String editStr = "Edit";
+  static const String demoNameStr = "David Smith";
+  static const String demoEmailStr = "davidsmith@gmail.com";
   static const String createNewPasswordStr = "Create New Password";
   static const String resendOtpStr = "Resend OTP";
   static const String sendStr = "Send";
+  static const String homeStr = "Home";
+  static const String calendarStr = "Calendar";
+  static const String chatStr = "Chat";
   static const String okStr = "Ok";
   static const String saveStr = "Save";
   static const String noButtonStr = "No";
@@ -22,6 +30,7 @@ class AppStrings {
   static const String todayStr = "Today";
   static const String upcommingStr = "Upcoming";
   static const String pastStr = "Past";
+  static const String travelCheckListStr = "Travel Checklist";
   static const String nameStr = "Full Name";
   static const String addMembersStr = "Add Members";
   static const String editMemberDetailsStr = "Edit Family Member Details";
@@ -77,6 +86,13 @@ class AppStrings {
   static const String startDateStr = "Start Date";
   static const String endDateStr = "End Date";
   static const String addMoreStr = "Add More";
+  static const String categoryStr = "Category";
+  static const String groceryStr = "Grocery";
+  static const String resetPasswordStr = "Reset Password";
+  static const String logoutStr = "Logout";
+  static const String settingsStr = "Settings";
+  static const String digitalAddressBookStr = "Digital Address Book";
+  static const String medicalStr = "Medical";
   static const String deleteStr = "Delete";
   static const String menuDetailsStr = "Menu Details";
   static const String mealDetailsStr = "Meal Details";
@@ -106,40 +122,40 @@ class AppStrings {
   static const String descriptionStr = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
 
   // Svgs
-  static const String svgSmLogo = AppStrings.iconPath + "logo_sm.svg";
-  static const String svgIconLogo = AppStrings.iconPath + "logo_icon.svg";
-  static const String svgPending = AppStrings.iconPath + "pending.svg";
-  static const String svgHome = AppStrings.iconPath + "home.svg";
-  static const String svgTaskList = AppStrings.iconPath + "task_list.svg";
-  static const String svgCalendar = AppStrings.iconPath + "calendar.svg";
-  static const String svgClock = AppStrings.iconPath + "clock.svg";
-  static const String svgChat = AppStrings.iconPath + "chat.svg";
-  static const String svgNotification = AppStrings.iconPath + "notification.svg";
-  static const String svgAccount = AppStrings.iconPath + "account.svg";
-  static const String svgFamily = AppStrings.iconPath + "family.svg";
-  static const String svgLunch = AppStrings.iconPath + "lunch.svg";
-  static const String svgShoppingBasket = AppStrings.iconPath + "shopping-basket.svg";
-  static const String svgTravel = AppStrings.iconPath + "travel_checklist.svg";
-  static const String svgCategory = AppStrings.iconPath + "category.svg";
-  static const String svgDigitalAddressBook = AppStrings.iconPath + "ph_address_book.svg";
-  static const String svgSettings = AppStrings.iconPath + "settings.svg";
-  static const String svgLogout = AppStrings.iconPath + "logout.svg";
-  static const String svgDownArrow = AppStrings.iconPath + "down_arrow.svg";
-  static const String svgUpArrow = AppStrings.iconPath + "up_arrow.svg";
-  static const String svgDot = AppStrings.iconPath + "dot.svg";
-  static const String svgEdit = AppStrings.iconPath + "edit.svg";
-  static const String svgCheckboxTik = AppStrings.iconPath + "yes_checkbox.svg";
-  static const String svgImageNotFound = AppStrings.iconPath + "image_not_found.svg";
-  static const String svgChatCheck = AppStrings.iconPath + "chat_check.svg";
-  static const String svgChatMenu = AppStrings.iconPath + "chat_menu.svg";
-  static const String svgAttachment = AppStrings.iconPath + "attachment.svg";
-  static const String svgEmoji = AppStrings.iconPath + "emoji.svg";
-  static const String svgSend = AppStrings.iconPath + "send.svg";
-  static const String svgMinus = AppStrings.iconPath + "minus.svg";
+  static const String svgSmLogo = "${AppStrings.iconPath}logo_sm.svg";
+  static const String svgIconLogo = "${AppStrings.iconPath}logo_icon.svg";
+  static const String svgPending = "${AppStrings.iconPath}pending.svg";
+  static const String svgHome = "${AppStrings.iconPath}home.svg";
+  static const String svgTaskList = "${AppStrings.iconPath}task_list.svg";
+  static const String svgCalendar = "${AppStrings.iconPath}calendar.svg";
+  static const String svgClock = "${AppStrings.iconPath}clock.svg";
+  static const String svgChat = "${AppStrings.iconPath}chat.svg";
+  static const String svgNotification = "${AppStrings.iconPath}notification.svg";
+  static const String svgAccount = "${AppStrings.iconPath}account.svg";
+  static const String svgFamily = "${AppStrings.iconPath}family.svg";
+  static const String svgLunch = "${AppStrings.iconPath}lunch.svg";
+  static const String svgShoppingBasket = "${AppStrings.iconPath}shopping-basket.svg";
+  static const String svgTravel = "${AppStrings.iconPath}travel_checklist.svg";
+  static const String svgCategory = "${AppStrings.iconPath}category.svg";
+  static const String svgDigitalAddressBook = "${AppStrings.iconPath}ph_address_book.svg";
+  static const String svgSettings = "${AppStrings.iconPath}settings.svg";
+  static const String svgLogout = "${AppStrings.iconPath}logout.svg";
+  static const String svgDownArrow = "${AppStrings.iconPath}down_arrow.svg";
+  static const String svgUpArrow = "${AppStrings.iconPath}up_arrow.svg";
+  static const String svgDot = "${AppStrings.iconPath}dot.svg";
+  static const String svgEdit = "${AppStrings.iconPath}edit.svg";
+  static const String svgCheckboxTik = "${AppStrings.iconPath}yes_checkbox.svg";
+  static const String svgImageNotFound = "${AppStrings.iconPath}image_not_found.svg";
+  static const String svgChatCheck = "${AppStrings.iconPath}chat_check.svg";
+  static const String svgChatMenu = "${AppStrings.iconPath}chat_menu.svg";
+  static const String svgAttachment = "${AppStrings.iconPath}attachment.svg";
+  static const String svgEmoji = "${AppStrings.iconPath}emoji.svg";
+  static const String svgSend = "${AppStrings.iconPath}send.svg";
+  static const String svgMinus = "${AppStrings.iconPath}minus.svg";
 
-  static const String lottieDelete = AppStrings.lottiePath + "delete_lottie.json";
+  static const String lottieDelete = "${AppStrings.lottiePath}delete_lottie.json";
 
-  static const String imgProfile = AppStrings.imagePath + "profile.png";
+  static const String imgProfile = "${AppStrings.imagePath}profile.png";
 
   // hints
   static const String hintEmail = "johndeo@gmail.com";
@@ -150,6 +166,8 @@ class AppStrings {
 
   // Errors
   static const String emailError = "Please enter valid email!";
+  static const String updateEndTimeError = "Update end time!";
+  static const String somethingWentWrongError = "Something went wrong!";
   static const String passwordError = "Please enter valid password!";
   static const String nameError = "Please enter valid name!";
   static const String relationError = "Please enter valid relation!";

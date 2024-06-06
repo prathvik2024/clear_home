@@ -16,7 +16,7 @@ class CustomRichText extends StatelessWidget {
     return RichText(
         text: TextSpan(
             text: firstText,
-            style: firstTextStyle != null ? firstTextStyle : AppFonts.kPoppinsRegular.copyWith(color: AppColors.kLightBlack),
-            children: [TextSpan(text: secondText,recognizer: TapGestureRecognizer()..onTap = onClick, style: secondTextStyle != null ? secondTextStyle : AppFonts.kPoppinsMedium.copyWith(color: AppColors.kDarkBlue))]));
+            style: firstTextStyle ?? AppFonts.kPoppinsRegular.copyWith(color: AppColors.kLightBlack),
+            children: [TextSpan(text: secondText,recognizer: TapGestureRecognizer()..onTap = onClick, style: secondTextStyle ?? AppFonts.kPoppinsMedium.copyWith(color: AppColors.kDarkBlue))]));
   }
 }

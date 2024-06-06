@@ -15,7 +15,7 @@ class FamilyCardView extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Card(
@@ -23,25 +23,25 @@ class FamilyCardView extends StatelessWidget {
           color: familyCardList[index].color,
           child: Container(
             width: width * 0.43,
-            padding: EdgeInsets.only(top: 20, left: 20),
+            padding: const EdgeInsets.only(top: 20, left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircularImage(imageWidget: Image.network(familyCardList[index].profileImage, fit: BoxFit.cover,)),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
                   familyCardList[index].personName,
                   style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
                     SvgPicture.asset(AppStrings.svgAccount),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
@@ -50,13 +50,13 @@ class FamilyCardView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
                     SvgPicture.asset(AppStrings.svgFamily),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
@@ -65,7 +65,7 @@ class FamilyCardView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -76,7 +76,7 @@ class FamilyCardView extends StatelessWidget {
                       height: 20,
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
@@ -85,7 +85,7 @@ class FamilyCardView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
               ],

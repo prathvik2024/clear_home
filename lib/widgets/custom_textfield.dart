@@ -7,11 +7,9 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       this.controller,
       this.textLabel,
-      this.isPassword = false,
       this.isSecure = false,
       this.prefixIcon,
       this.hintText,
-      this.onTogglePassword,
       this.validationCallback,
       this.suffixIcon,
       this.contentPadding,
@@ -25,15 +23,14 @@ class CustomTextField extends StatelessWidget {
       this.bgColor,
       this.focusBorderSide,
       this.errorText,
-      this.onChange});
+      this.onChange,
+      this.readOnly = false});
 
   final TextEditingController? controller;
-  final bool isPassword;
   final bool isSecure;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? hintText;
-  final VoidCallback? onTogglePassword;
   final String? Function(String?)? validationCallback;
   final String? textLabel;
   final EdgeInsetsGeometry? contentPadding;
@@ -48,6 +45,7 @@ class CustomTextField extends StatelessWidget {
   Color? bgColor;
   BorderSide? focusBorderSide;
   String? errorText;
+  bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -56,45 +54,40 @@ class CustomTextField extends StatelessWidget {
       children: [
         if (textLabel != null) ...[
           Text(textLabel!, style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16)),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
         ],
-        InkWell(
+        TextFormField(
           onTap: onClick,
-          child: TextFormField(
-            onChanged: onChange,
-            enabled: enabled,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: keyboardType,
-            validator: validationCallback,
-            controller: controller,
-            obscureText: isPassword && isSecure,
-            cursorColor: AppColors.kDarkBlue,
-            maxLength: maxLength,
-            minLines: minLines,
-            maxLines: maxLines ?? null,
-            cursorErrorColor: AppColors.kDarkBlue,
-            decoration: InputDecoration(
-                fillColor: bgColor,
-                filled: bgColor != null,
-                contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40)),
-                enabledBorder:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: BorderSide(color: Colors.black12)),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: focusBorderSide ?? BorderSide(color: AppColors.kDarkBlue)),
-                prefixIcon: prefixIcon,
-                hintText: hintText,
-                errorText: errorText,
-                hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
-                suffixIcon: suffixIcon != null
-                    ? InkWell(
-                        onTap: onTogglePassword,
-                        child: suffixIcon,
-                      )
-                    : null),
-          ),
+          onChanged: onChange,
+          enabled: enabled,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          keyboardType: keyboardType,
+          validator: validationCallback,
+          controller: controller,
+          readOnly: readOnly,
+          obscureText: isSecure,
+          cursorColor: AppColors.kDarkBlue,
+          maxLength: maxLength,
+          minLines: minLines,
+          maxLines: maxLines,
+          cursorErrorColor: AppColors.kDarkBlue,
+          decoration: InputDecoration(
+              fillColor: bgColor,
+              filled: bgColor != null,
+              contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40)),
+              enabledBorder:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 40), borderSide: const BorderSide(color: Colors.black12)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(borderRadius ?? 40),
+                  borderSide: focusBorderSide ?? const BorderSide(color: AppColors.kDarkBlue)),
+              prefixIcon: prefixIcon,
+              hintText: hintText,
+              errorText: errorText,
+              hintStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 14),
+              suffixIcon: suffixIcon),
         ),
       ],
     );

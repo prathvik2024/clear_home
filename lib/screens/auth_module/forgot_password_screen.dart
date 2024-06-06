@@ -18,100 +18,103 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   TextEditingController emailController = TextEditingController();
 
-  GlobalKey<FormState> _FormKey = GlobalKey();
-
-  String? validateEmail(input) {
-    if (!Validator.isEmail(input: input!.trim())) {
-      return AppStrings.emailError;
-    }
-    return null;
-  }
+  final GlobalKey<FormState> _FormKey = GlobalKey();
 
   void validateForgotPassword() {
     if (_FormKey.currentState!.validate()) {
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppStrings.forgotPasswordStr)));
-    Navigator.pushNamed(context, AppRoutes.newPassword);
+      Navigator.pushNamed(context, AppRoutes.newPassword);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(gradient: AppColors.kGradientSplash),
-          child: SafeArea(
-            child: Column(
-              children: [
-                SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: IconButton(
-                              onPressed: ()=>Navigator.pop(context),
-                              icon: Icon(
-                                Icons.keyboard_backspace_outlined,
-                                color: Colors.white,
-                              )),
-                        ),
-                        Center(child: SvgPicture.asset(AppStrings.svgSmLogo)),
-                      ],
-                    )),
-                Expanded(
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: IntrinsicHeight(
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Text(
-                              AppStrings.forgotPasswordStr,
-                              style: AppFonts.kPoppinsMedium.copyWith(
-                                fontSize: 22,
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.zero,
+                    decoration: const BoxDecoration(
+                      gradient: AppColors.kGradientSplash,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  child: IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: const Icon(
+                                        Icons.keyboard_backspace_outlined,
+                                        color: Colors.white,
+                                      )),
+                                ),
+                                Center(child: SvgPicture.asset(AppStrings.svgSmLogo)),
+                              ],
+                            )),
+                        Expanded(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      AppStrings.forgotPasswordStr,
+                                      style: AppFonts.kPoppinsMedium.copyWith(
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Form(
+                                      key: _FormKey,
+                                      child: Column(
+                                        children: [
+                                          CustomTextField(
+                                            textLabel: AppStrings.emailStr,
+                                            controller: emailController,
+                                            hintText: AppStrings.hintEmail,
+                                            validationCallback: (input) => Validator.validate(input: input, type: ValidationType.isEmail),
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(
+                                    height: 60,
+                                  ),
+                                  CustomButton(
+                                    label: AppStrings.sendStr,
+                                    onClick: validateForgotPassword,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Form(
-                              key: _FormKey,
-                              child: Column(
-                                children: [
-                                  CustomTextField(
-                                    textLabel: AppStrings.emailStr,
-                                    controller: emailController,
-                                    hintText: AppStrings.hintEmail,
-                                    validationCallback: validateEmail,
-                                  ),
-                                ],
-                              )),
-                          SizedBox(
-                            height: 60,
-                          ),
-                          CustomButton(
-                            label: AppStrings.sendStr,
-                            onClick: validateForgotPassword,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          )),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

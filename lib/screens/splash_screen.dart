@@ -16,20 +16,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () => Navigator.pushReplacementNamed(context, AppRoutes.login),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(gradient: AppColors.kGradientSplash),
+        decoration: const BoxDecoration(gradient: AppColors.kGradientSplash),
         child: Center(
           child: SvgPicture.asset(AppStrings.svgIconLogo),
         ),

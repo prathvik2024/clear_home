@@ -26,24 +26,24 @@ class CustomTabview extends StatelessWidget {
           labelPadding: EdgeInsets.zero,
           tabs: [
             Tab(
-                child: Container(
+                child: SizedBox(
               width: width * 50,
-              child: Text(
+              child: const Text(
                 AppStrings.profileStr,
                 textAlign: TextAlign.center,
               ),
             )),
             Tab(
-              child: Container(
+              child: SizedBox(
                 width: width * 50,
-                child: Text(
+                child: const Text(
                   AppStrings.taskStr,
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
           ],
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           dividerHeight: 0,
           labelStyle: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 16, color: Colors.white),
           unselectedLabelStyle: AppFonts.kPoppinsRegular.copyWith(fontSize: 16, color: Colors.black),

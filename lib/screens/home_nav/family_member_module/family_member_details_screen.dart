@@ -1,5 +1,4 @@
 import 'package:clear_home/constants/colors.dart';
-import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/screens/home_nav/family_member_module/family_member_profile_screen.dart';
 import 'package:clear_home/screens/home_nav/family_member_module/family_member_task_screen.dart';
@@ -35,8 +34,6 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> w
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     _pageController = PageController(
       initialPage: selectedTabIndex,
@@ -51,7 +48,7 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> w
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomTabview(
@@ -63,18 +60,18 @@ class _FamilyMemberDetailsScreenState extends State<FamilyMemberDetailsScreen> w
             Expanded(
                 child: PageView(
               scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               controller: _pageController,
-              onPageChanged: (num) {
-                selectedTabIndex = num;
-                _tabController.index = num;
+              onPageChanged: (tab) {
+                selectedTabIndex = tab;
+                _tabController.index = tab;
                 setState(() {});
               },
               children: [
                 FamilyMemberProfileScreen(
                   args: args,
                 ),
-                FamilyMemberTaskScreen()
+                const FamilyMemberTaskScreen()
               ],
             ))
           ],
