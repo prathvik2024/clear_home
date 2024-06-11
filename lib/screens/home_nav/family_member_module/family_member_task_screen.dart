@@ -4,7 +4,6 @@ import 'package:clear_home/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/data_provider.dart';
-import '../../../models/recent_task_model.dart';
 import '../../../widgets/home_widgets/recent_list_card_view.dart';
 
 class FamilyMemberTaskScreen extends StatefulWidget {

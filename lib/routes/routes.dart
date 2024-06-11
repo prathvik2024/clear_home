@@ -36,10 +36,10 @@ class AppRoutes {
   static const String createGeneralTask = "/createGeneralTask";
   static const String taskDetails = "/taskDetails";
   static const String chatDetails = "/chatDetails";
-  static const String  travelList = "/travelList";
-  static const String  addTravelList = "/addTravelChecklist";
-  static const String  mealList = "/mealList";
-  static const String  addMeal = "/addMeal";
+  static const String travelList = "/travelList";
+  static const String addTravelList = "/addTravelChecklist";
+  static const String mealList = "/mealList";
+  static const String addMeal = "/addMeal";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     splash: (context) => const SplashScreen(),
@@ -53,13 +53,13 @@ class AppRoutes {
     addMembers: (context) => const AddMembersScreen(),
     familyMemberList: (context) => const FamilyMemberListScreen(),
     familyMemberDetails: (context) => const FamilyMemberDetailsScreen(),
-    taskList: (context) => TaskListScreen(),
+    taskList: (context) => const TaskListScreen(),
     createGeneralTask: (context) => const CreateGeneralTask(),
     taskDetails: (context) => const TaskDetailsScreen(),
     chatDetails: (context) => const ChatDetailsScreen(),
-    travelList: (context) => TravelListScreen(),
+    travelList: (context) => const TravelListScreen(),
     addTravelList: (context) => const AddTravelChecklistScreen(),
-    mealList: (context) => MealListScreen(),
+    mealList: (context) => const MealListScreen(),
     addMeal: (context) => const AddMealScreen(),
   };
 }

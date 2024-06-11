@@ -7,8 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/strings.dart';
 import '../../models/recent_task_model.dart';
 
-
-
 class RecentListCardView extends StatelessWidget {
   List<RecentTaskModel> recentTaskList = [];
   bool shrinkWrap;
@@ -29,7 +27,7 @@ class RecentListCardView extends StatelessWidget {
             Navigator.pushNamed(context, AppRoutes.taskDetails, arguments: {"modelData": recentTaskList[index], "taskType": taskType.toString()});
           },
           child: Card(
-            margin: const EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: (index == recentTaskList.indexOf(recentTaskList.last)) ? 100 : 10),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),

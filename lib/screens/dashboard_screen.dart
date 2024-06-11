@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case AppStrings.chatStr:
         Navigator.pushNamed(context, AppRoutes.addMembers);
       case AppStrings.travelCheckListStr:
-        Navigator.pushNamed(context, AppRoutes.addTravelList, arguments: {"":null});
+        Navigator.pushNamed(context, AppRoutes.addTravelList, arguments: {"": null});
       case AppStrings.mealStr:
         Navigator.pushNamed(context, AppRoutes.addMeal);
     }
@@ -76,105 +76,116 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         backgroundColor: AppColors.kHomeBg,
         body: SafeArea(
-          child: SizedBox(
-            child: Builder(
-              builder: (context) {
-                switch (selectedPage) {
-                  case AppStrings.homeStr:
-                    return HomeScreen(
-                        scaffoldKey: _scaffoldKey,
+          child: Stack(fit: StackFit.expand, children: [
+            SizedBox(
+              child: Builder(
+                builder: (context) {
+                  switch (selectedPage) {
+                    case AppStrings.homeStr:
+                      return HomeScreen(
+                          scaffoldKey: _scaffoldKey,
+                          backScreen: (String route) {
+                            selectedPage = route;
+                            setState(() {});
+                          });
+                    case AppStrings.taskStr:
+                      return TaskListScreen(
                         backScreen: (String route) {
                           selectedPage = route;
                           setState(() {});
-                        });
-                  case AppStrings.taskStr:
-                    return TaskListScreen(
-                      backScreen: (String route) {
-                        selectedPage = route;
-                        setState(() {});
-                      },
-                    );
-                  case AppStrings.calendarStr:
-                    return const CalendarScreen();
-                  case AppStrings.chatStr:
-                    return ChatListScreen(
-                      backScreen: (String route) {
-                        selectedPage = route;
-                        setState(() {});
-                      },
-                    );
-                  case AppStrings.travelCheckListStr:
-                    return TravelListScreen(
-                      backScreen: (String route) {
-                        selectedPage = route;
-                        setState(() {});
-                      },
-                    );
-                  case AppStrings.mealStr:
-                    return MealListScreen(
-                      backScreen: (String route) {
-                        selectedPage = route;
-                        setState(() {});
-                      },
-                    );
-                  default:
-                    return HomeScreen(
-                        scaffoldKey: _scaffoldKey,
+                        },
+                      );
+                    case AppStrings.calendarStr:
+                      return const CalendarScreen();
+                    case AppStrings.chatStr:
+                      return ChatListScreen(
                         backScreen: (String route) {
                           selectedPage = route;
                           setState(() {});
-                        });
-                }
-              },
+                        },
+                      );
+                    case AppStrings.travelCheckListStr:
+                      return TravelListScreen(
+                        backScreen: (String route) {
+                          selectedPage = route;
+                          setState(() {});
+                        },
+                      );
+                    case AppStrings.mealStr:
+                      return MealListScreen(
+                        backScreen: (String route) {
+                          selectedPage = route;
+                          setState(() {});
+                        },
+                      );
+                    default:
+                      return HomeScreen(
+                          scaffoldKey: _scaffoldKey,
+                          backScreen: (String route) {
+                            selectedPage = route;
+                            setState(() {});
+                          });
+                  }
+                },
+              ),
             ),
-          ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(right: 6.0),
-          child: FloatingActionButton(
-            backgroundColor: AppColors.kDarkBlue,
-            onPressed: fabClickRedirectPage,
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 34,
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Container(
+                margin: const EdgeInsets.only(left: 21, right: 21, bottom: 25),
+                height: 70,
+                child: Card(
+                  elevation: 5,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: DataProvider.bottomMenuList.map((item) {
+                        return IconButton(
+                            onPressed: () {
+                              selectedPage = item["title"];
+                              setState(() {});
+                            },
+                            icon: SvgPicture.asset(
+                              item["icon"],
+                              width: 28,
+                              height: 28,
+                              color: ((selectedPage == item["title"]) ? AppColors.kDarkBlue : Colors.grey),
+                            ),
+                            style: (selectedPage == item["title"])
+                                ? IconButton.styleFrom(
+                                    elevation: 15,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      side: const BorderSide(
+                                        color: AppColors.kHomeBg,
+                                        width: 4,
+                                      ),
+                                    ))
+                                : null);
+                      }).toList()),
+                ),
+              ),
             ),
-          ),
-        ),
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.only(left: 21, right: 21, bottom: 30),
-          height: 70,
-          child: Card(
-            elevation: 5,
-            color: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: DataProvider.bottomMenuList.map((item) {
-                  return IconButton(
-                      onPressed: () {
-                        selectedPage = item["title"];
-                        setState(() {});
-                      },
-                      icon: SvgPicture.asset(
-                        item["icon"],
-                        width: 28,
-                        height: 28,
-                        color: ((selectedPage == item["title"]) ? AppColors.kDarkBlue : Colors.grey),
-                      ),
-                      style: (selectedPage == item["title"])
-                          ? IconButton.styleFrom(
-                              elevation: 15,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                side: const BorderSide(
-                                  color: AppColors.kHomeBg,
-                                  width: 4,
-                                ),
-                              ))
-                          : null);
-                }).toList()),
-          ),
+            Positioned(
+              bottom:100,
+              right: 20,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 6.0),
+                child: FloatingActionButton(
+                  backgroundColor: AppColors.kDarkBlue,
+                  onPressed: fabClickRedirectPage,
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 34,
+                  ),
+                ),
+              ),
+            ),
+          ]),
         ),
       ),
     );
