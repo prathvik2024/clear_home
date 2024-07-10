@@ -15,7 +15,6 @@ import 'package:clear_home/screens/travel_checklist/add_travel_checklist_screen.
 import 'package:clear_home/screens/travel_checklist/travel_list_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/chat_module/chat_details_screen.dart';
 import '../screens/task_module/create_general_task.dart';
 import '../screens/task_module/task_details_screen.dart';
 import '../screens/task_module/task_list_screen.dart';
@@ -35,7 +34,6 @@ class AppRoutes {
   static const String taskList = "/taskList";
   static const String createGeneralTask = "/createGeneralTask";
   static const String taskDetails = "/taskDetails";
-  static const String chatDetails = "/chatDetails";
   static const String travelList = "/travelList";
   static const String addTravelList = "/addTravelChecklist";
   static const String mealList = "/mealList";
@@ -56,7 +54,6 @@ class AppRoutes {
     taskList: (context) => const TaskListScreen(),
     createGeneralTask: (context) => const CreateGeneralTask(),
     taskDetails: (context) => const TaskDetailsScreen(),
-    chatDetails: (context) => const ChatDetailsScreen(),
     travelList: (context) => const TravelListScreen(),
     addTravelList: (context) => const AddTravelChecklistScreen(),
     mealList: (context) => const MealListScreen(),

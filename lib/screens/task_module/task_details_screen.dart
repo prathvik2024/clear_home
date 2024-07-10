@@ -65,7 +65,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+          padding: const EdgeInsets.only(left: 21, right: 21, bottom: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,13 +74,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 elevation: 3,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(child: taskItem(AppStrings.taskTypeStr, model?.title ?? "", model?.icon ?? "")),
                           if (type == TaskType.TodayTask) ...[
@@ -172,13 +173,15 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           (index) {
                             return Expanded(
                               child: ListTile(
+                                minLeadingWidth: 0,
                                 dense: true,
-                                horizontalTitleGap: 2,
-                                visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+                                horizontalTitleGap:0,
+                                visualDensity: const VisualDensity(vertical: -4, horizontal: 1),
                                 contentPadding: EdgeInsets.zero,
                                 leading: Radio(
+                                  materialTapTargetSize:MaterialTapTargetSize.shrinkWrap,
                                   activeColor: AppColors.kDarkBlue,
-                                  visualDensity: VisualDensity.compact,
+                                  visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
                                   value: index,
                                   groupValue: taskStatus,
                                   onChanged: (value) {
@@ -226,7 +229,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           list.length,
           (index) {
             return Container(
-              width: size.width * 0.40,
+              width:  size.width * 0.35,
               margin: EdgeInsets.only(top: (index > 1) ? 10 : 0),
               child: Row(
                 children: [
@@ -269,7 +272,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         (index) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-            margin: EdgeInsets.only(right: 10, top: (index > 1) ? 10 : 0),
+            margin: const EdgeInsets.only(right: 10, top: 10),
             decoration: BoxDecoration(color: AppColors.kDarkBlue.withOpacity(0.08), borderRadius: BorderRadius.circular(30)),
             child: Text(
               list[index],
@@ -284,6 +287,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   Widget taskItem(String heading, String title, String icon) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           heading,
@@ -293,6 +297,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           height: 5,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SvgPicture.asset(
               icon,
@@ -303,9 +309,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             const SizedBox(
               width: 5,
             ),
-            Text(
-              title,
-              style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.black),
+            Flexible(
+              child: Text(
+                title,
+                maxLines: 2,
+                style: AppFonts.kPoppinsMedium.copyWith(fontSize: 16, color: Colors.black,),
+              ),
             ),
           ],
         )

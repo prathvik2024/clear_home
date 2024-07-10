@@ -6,6 +6,10 @@ import 'dart:math' as math;
 import '../widgets/show_toast.dart';
 
 class Helper {
+
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
   static Future<String?> selectDate(BuildContext context) async {
     final DateTime? pickDate =
         await showDatePicker(context: context, firstDate: DateTime.now(), initialDate: DateTime.now(), lastDate: DateTime(2025));

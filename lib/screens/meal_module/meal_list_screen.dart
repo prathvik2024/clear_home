@@ -53,6 +53,7 @@ class MealListScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return Card(
+              margin: EdgeInsets.only(bottom: (index == DataProvider.mealList.length - 1) ? 100 : 10),
               color: Colors.white,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.09,

@@ -19,6 +19,8 @@ class AppStrings {
   static const String resendOtpStr = "Resend OTP";
   static const String sendStr = "Send";
   static const String homeStr = "Home";
+  static const String galleryStr = "Gallery";
+  static const String cameraStr = "Camera";
   static const String calendarStr = "Calendar";
   static const String chatStr = "Chat";
   static const String okStr = "Ok";
@@ -112,6 +114,7 @@ class AppStrings {
   static const String createGeneralStr = "Create General Task";
   static const String forgotPasswordStr = "Forgot Password?";
   static const String verificationStr = "Verification";
+  static const String mediaAttachmentStr = "Media Attachment";
   static const String otpVerificationStr = "OTP Verification";
   static const String familyMemberDetailStr = "Family Member Detail";
   static const String verificationMsgStr = "Dont't worry! you will be updated soon on your email";
@@ -152,10 +155,13 @@ class AppStrings {
   static const String svgEmoji = "${AppStrings.iconPath}emoji.svg";
   static const String svgSend = "${AppStrings.iconPath}send.svg";
   static const String svgMinus = "${AppStrings.iconPath}minus.svg";
+  static const String svgGoogle = "${AppStrings.iconPath}google.svg";
 
   static const String lottieDelete = "${AppStrings.lottiePath}delete_lottie.json";
 
   static const String imgProfile = "${AppStrings.imagePath}profile.png";
+  static const String imgCamera = "${AppStrings.imagePath}camera.png";
+  static const String imgGallery = "${AppStrings.imagePath}gallery.png";
 
   // hints
   static const String hintEmail = "johndeo@gmail.com";

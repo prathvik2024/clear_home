@@ -42,47 +42,6 @@ class DataProvider {
     DrawerModel(title: AppStrings.logoutStr, icon: AppStrings.svgLogout)
   ];
 
-  static List<MessageModel> messageModel = [
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel("Hii My name is prathvik", "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("what are you doing?", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("Hello", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel("Hii My name is prathvik", "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, false),
-    MessageModel("what are you doing?", "8.10 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-    MessageModel(AppStrings.descriptionStr, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true),
-  ];
-
-  static List<ChatModel> chatList = [
-    ChatModel(
-        image: "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
-        personName: "John Snow",
-        lastMessage: AppStrings.descriptionStr,
-        pendingMessageCount: 10,
-        time: "2 hr"),
-    ChatModel(
-        image:
-            "https://img.freepik.com/free-photo/horizontal-portrait-smiling-happy-young-pleasant-looking-female-wears-denim-shirt-stylish-glasses-with-straight-blonde-hair-expresses-positiveness-poses_176420-13176.jpg",
-        personName: "Vidhi Patel"),
-    ChatModel(
-        image:
-            "https://img.freepik.com/free-photo/indoor-picture-cheerful-handsome-young-man-having-folded-hands-looking-directly-smiling-sincerely-wearing-casual-clothes_176532-10257.jpg",
-        personName: "Petter Miller",
-        lastMessage: AppStrings.descriptionStr,
-        pendingMessageCount: 3,
-        time: "5 hr"),
-    ChatModel(
-        image: "https://img.freepik.com/free-photo/front-view-smiley-girl-looking-away_23-2148244695.jpg",
-        personName: "Arya Snow",
-        lastMessage: AppStrings.descriptionStr,
-        pendingMessageCount: 1,
-        time: "3 hr ")
-  ];
-
   static List<String> daysName = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   static List<String> assigneeList = ["Family Member 1", "Family Member 2", "Family Member 3", "Family Member 4"];
   static List<MealTaskModel> mealTaskList = [
@@ -108,7 +67,7 @@ class DataProvider {
     "Kaju Masala",
     "Pizza",
     "Burger",
-    "Cold Drinks"
+    "Cold Drinks",
   ];
 
   static Map<TaskType, String> dynamicAppBarMap = {
@@ -176,7 +135,7 @@ class DataProvider {
     FamilyMemberModel("https://img.freepik.com/free-photo/front-view-smiley-girl-looking-away_23-2148244695.jpg", "Arya Snow"),
   ];
 
-  static  List<RecentTaskModel> recentTaskList = [
+  static List<RecentTaskModel> recentTaskList = [
     RecentTaskModel(AppStrings.svgShoppingBasket, "Buy Groceries", "21-03-2022", "Angelina"),
     RecentTaskModel(AppStrings.svgLunch, "Prepare Lunch", "21-03-2022", "Liza"),
     RecentTaskModel(AppStrings.svgTravel, "Travel Checklist", "21-03-2022", "David"),

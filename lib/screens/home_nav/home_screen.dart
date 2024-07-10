@@ -1,13 +1,18 @@
 import 'package:clear_home/constants/colors.dart';
 import 'package:clear_home/constants/data_provider.dart';
 import 'package:clear_home/constants/fonts.dart';
+import 'package:clear_home/constants/helper.dart';
 import 'package:clear_home/widgets/home_widgets/circular_image.dart';
 import 'package:clear_home/widgets/home_widgets/family_card_view.dart';
 import 'package:clear_home/widgets/home_widgets/recent_list_card_view.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/strings.dart';
+import '../../models/chat_model.dart';
+import '../../utils/firebase_provider.dart';
+import '../chat_module/chat_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -20,6 +25,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onBackgroundMessage(FirebaseProvider.backgroundHandler);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

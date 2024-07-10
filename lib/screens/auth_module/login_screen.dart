@@ -3,12 +3,17 @@ import 'package:clear_home/constants/fonts.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/constants/validator.dart';
 import 'package:clear_home/routes/routes.dart';
+import 'package:clear_home/utils/firebase_provider.dart';
 import 'package:clear_home/widgets/custom_button.dart';
 import 'package:clear_home/widgets/custom_richtext.dart';
 import 'package:clear_home/widgets/custom_textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +25,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  ValueNotifier userCredentials = ValueNotifier("");
   bool isSecure = true;
 
   final GlobalKey<FormState> _loginFormKey = GlobalKey();
@@ -123,6 +130,64 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   const SizedBox(
                                     height: 30,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Expanded(
+                                        flex: 2,
+                                        child: Divider(
+                                          height: 1,
+                                          color: AppColors.kGray,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          "Or",
+                                          style: AppFonts.kPoppinsMedium.copyWith(color: AppColors.kGray),
+                                        ),
+                                      ),
+                                      const Expanded(
+                                        flex: 2,
+                                        child: Divider(
+                                          height: 1,
+                                          color: AppColors.kGray,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: TextButton.icon(
+                                      onPressed: () async {
+                                        userCredentials.value = await FirebaseProvider.signInWithGoogle();
+                                        if (userCredentials.value != null) {
+                                          print("logged user: ${userCredentials.value.user!.email}");
+
+                                          SharedPreferences spf = await SharedPreferences.getInstance();
+                                          await spf.setString("userName", userCredentials.value.user!.displayName.toString());
+                                          if (!await FirebaseProvider.userExists()) {
+                                            await FirebaseProvider.createUser();
+                                          }
+                                          Navigator.pushNamed(context, AppRoutes.dashboard);
+                                        }
+                                      },
+                                      icon: SvgPicture.asset(AppStrings.svgGoogle),
+                                      label: Text(
+                                        "Sign In with Google",
+                                        style: AppFonts.kPoppinsMedium.copyWith(fontSize: 14, color: Colors.black),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8), side: const BorderSide(color: AppColors.kGray, width: 1))),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
                                   const Spacer(),
                                   Align(

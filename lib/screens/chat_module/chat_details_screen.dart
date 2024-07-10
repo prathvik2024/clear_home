@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:clear_home/constants/data_provider.dart';
 import 'package:clear_home/constants/strings.dart';
 import 'package:clear_home/models/chat_model.dart';
+import 'package:clear_home/utils/date_time_util.dart';
+import 'package:clear_home/utils/firebase_provider.dart';
+import 'package:clear_home/utils/image_picker_util.dart';
 import 'package:clear_home/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/colors.dart';
@@ -11,7 +17,9 @@ import '../../models/message_model.dart';
 import '../../widgets/home_widgets/circular_image.dart';
 
 class ChatDetailsScreen extends StatefulWidget {
-  const ChatDetailsScreen({super.key});
+  final ChatModel chatModel;
+
+  const ChatDetailsScreen({super.key, required this.chatModel});
 
   @override
   State<ChatDetailsScreen> createState() => _ChatDetailsScreenState();
@@ -19,30 +27,33 @@ class ChatDetailsScreen extends StatefulWidget {
 
 class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   Map<String, dynamic>? args;
-  ChatModel? chatModel;
+  List<MessageModel> messageList = [];
   TextEditingController messageController = TextEditingController();
   ScrollController controller = ScrollController();
+  String? userStatus;
+
+  Future<Size> getImageWidthHeight(String imgPath) async {
+    File image = File(imgPath);
+    final decodeImage = await decodeImageFromList(image.readAsBytesSync());
+    return Size(decodeImage.width as double, decodeImage.height as double);
+  }
 
   @override
   void initState() {
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timestamp) {
-      if (controller.hasClients) {
-        final position = controller.position.maxScrollExtent + 50;
-        controller.animateTo(position, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
-      }
-      args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      if (args?["modelData"] != null) {
-        chatModel = args?["modelData"];
-      }
-      setState(() {});
-    });
+    SystemChannels.lifecycle.setMessageHandler(
+      (message) {
+        if (message.toString().contains("pause")) FirebaseProvider.getMessagingToken(false);
+        if (message.toString().contains("resume")) FirebaseProvider.getMessagingToken(true);
+
+        return Future.value(message);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: AppColors.kHomeBg,
       body: SafeArea(
@@ -67,9 +78,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                       ),
                     ),
                     CircularImage(
-                      imageWidget: (chatModel?.image.isNotEmpty ?? false) // if(args != null && args["image"] != null)
+                      imageWidget: (widget.chatModel.image.isNotEmpty ?? false) // if(args != null && args["image"] != null)
                           ? Image.network(
-                              chatModel!.image,
+                              widget.chatModel.image,
                               fit: BoxFit.cover,
                             )
                           : Image.asset(
@@ -85,98 +96,149 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          chatModel?.personName ?? AppStrings.demoNameStr,
+                          widget.chatModel.personName,
                           overflow: TextOverflow.ellipsis,
                           style: AppFonts.kPoppinsMedium.copyWith(fontSize: 18, color: Colors.black),
                         ),
-                        Text(
-                          "Online",
-                          overflow: TextOverflow.ellipsis,
-                          style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.green),
-                        ),
+                        StreamBuilder(
+                            stream: FirebaseProvider.getUserInfo(widget.chatModel),
+                            builder: (context, snapshot) {
+                              final data = snapshot.data?.docs;
+                              if (data != null && data.isNotEmpty && data.first.exists) {
+                                final chatUser = ChatModel.fromMap(data.first.data());
+                                userStatus = (chatUser.isOnline ?? false)
+                                    ? "Online"
+                                    : DateTimeUtil.getFormatedTime(context: context, time: chatUser.lastActiveTime ?? "");
+                              }
+
+                              return Text(
+                                userStatus ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFonts.kPoppinsRegular.copyWith(fontSize: 14, color: Colors.green),
+                              );
+                            }),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                controller: controller,
-                itemBuilder: (context, index) {
-                  return Container(
-                      padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
-                      child: Align(
-                        alignment: (DataProvider.messageModel[index].isSender) ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          textDirection: (DataProvider.messageModel[index].isSender) ? TextDirection.rtl : TextDirection.ltr,
-                          children: [
-                            CircularImage(
-                              imageWidget: (chatModel?.image.isNotEmpty ?? false) // if(args != null && args["image"] != null)
-                                  ? Image.network(
-                                      chatModel!.image,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(
-                                      AppStrings.imgProfile,
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: size.width * 0.60),
-                              child: Column(
-                                crossAxisAlignment: (DataProvider.messageModel[index].isSender) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: (DataProvider.messageModel[index].isSender) ? AppColors.kLiteBlue : Colors.white),
-                                    child: Text(
-                                      DataProvider.messageModel[index].message,
-                                      style: AppFonts.kPoppinsRegular
-                                          .copyWith(fontSize: 12, color: (DataProvider.messageModel[index].isSender) ? Colors.white : Colors.black),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: (DataProvider.messageModel[index].isSender) ? MainAxisAlignment.end : MainAxisAlignment.start,
+            StreamBuilder(
+                stream: FirebaseProvider.getAllMessages(widget.chatModel),
+                builder: (context, snapshot) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                    (timeStamp) {
+                      if (controller.hasClients) {
+                        final position = controller.position.maxScrollExtent;
+                        // controller.animateTo(position, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+                        controller.jumpTo(position);
+                      }
+                    },
+                  );
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    case ConnectionState.none:
+                      return const Center(child: CircularProgressIndicator(color: AppColors.kDarkBlue));
+                    case ConnectionState.active:
+                    case ConnectionState.done:
+                      messageList = snapshot.data?.docs.map((e) => MessageModel.fromMap(e.data())).toList() ?? [];
+                      return Expanded(
+                        child: ListView.builder(
+                          controller: controller,
+                          itemBuilder: (context, index) {
+                            bool isSender = FirebaseProvider.user.uid == messageList[index].fromId;
+                            if (!isSender && messageList[index].read!.isEmpty) {
+                              FirebaseProvider.updateMessageStatus(messageList[index]);
+                            }
+                            // if (messageList[index].messageType == "image") {
+                            //   getImageWidthHeight(messageList[index].msg ?? "").then((value) {
+                            //     if(value.height < 250){
+                            //      boxFit = BoxFit.fitWidth;
+                            //     }
+                            //   });
+                            // }
+
+                            return Container(
+                                padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
+                                child: Align(
+                                  alignment: (isSender) ? Alignment.centerRight : Alignment.centerLeft,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    textDirection: (isSender) ? TextDirection.rtl : TextDirection.ltr,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 8, left: 4),
-                                        child: Text(
-                                          "8:10 pm",
-                                          style: AppFonts.kPoppinsRegular.copyWith(fontSize: 12, color: AppColors.kGray),
+                                      CircularImage(
+                                        imageWidget: (widget.chatModel.image.isNotEmpty)
+                                            ? Image.network(
+                                                isSender ? FirebaseProvider.user.photoURL.toString() : widget.chatModel.image.toString(),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                AppStrings.imgProfile,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(maxWidth: size.width * 0.60),
+                                        child: Column(
+                                          crossAxisAlignment: (isSender) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.all((messageList[index].messageType == "image") ? 0 : 16),
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10), color: (isSender) ? AppColors.kLiteBlue : Colors.white),
+                                              child: (messageList[index].messageType == "image")
+                                                  ? Image.network(
+                                                      messageList[index].msg ?? "",
+                                                      width: 250,
+                                                      height: 400,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Text(
+                                                      messageList[index].msg ?? "",
+                                                      style: AppFonts.kPoppinsRegular
+                                                          .copyWith(fontSize: 12, color: (isSender) ? Colors.white : Colors.black),
+                                                    ),
+                                            ),
+                                            const SizedBox(
+                                              height: 6,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: (isSender) ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 8, left: 4),
+                                                  child: Text(
+                                                    DateTimeUtil.getFormatedTime(context: context, time: messageList[index].sent ?? ""),
+                                                    style: AppFonts.kPoppinsRegular.copyWith(fontSize: 12, color: AppColors.kGray),
+                                                  ),
+                                                ),
+                                                if (isSender && messageList[index].read!.isNotEmpty) ...[
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 8.0),
+                                                    child: SvgPicture.asset(
+                                                      AppStrings.svgChatCheck,
+                                                    ),
+                                                  ),
+                                                ]
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      if (DataProvider.messageModel[index].isSender) ...[
-                                        Padding(
-                                          padding: const EdgeInsets.only(right: 8.0),
-                                          child: SvgPicture.asset(
-                                            AppStrings.svgChatCheck,
-                                          ),
-                                        ),
-                                      ]
                                     ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                                  ),
+                                ));
+                          },
+                          itemCount: messageList.length,
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
                         ),
-                      ));
-                },
-                itemCount: DataProvider.messageModel.length,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-              ),
-            ),
+                      );
+                  }
+                }),
             Container(
               color: Colors.transparent,
               padding: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 12),
@@ -190,13 +252,85 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                       bgColor: Colors.white,
                       controller: messageController,
                       hintText: AppStrings.typeMessageStr,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          width: 20,
-                          height: 20,
-                          AppStrings.svgAttachment,
-                          color: Colors.black.withOpacity(0.15),
+                      suffixIcon: InkWell(
+                        overlayColor: WidgetStateColor.transparent,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      AppStrings.mediaAttachmentStr,
+                                      style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                      InkWell(
+                                        overlayColor: WidgetStateColor.transparent,
+                                        onTap: () async {
+                                          File imageFile = File(await ImagePickerUtil.pickImage());
+                                          await FirebaseProvider.sendChatImage(widget.chatModel, imageFile);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              AppStrings.imgGallery,
+                                              width: 50,
+                                              height: 50,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              AppStrings.galleryStr,
+                                              style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 14),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      InkWell(
+                                        overlayColor: WidgetStateColor.transparent,
+                                        onTap: () {},
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              AppStrings.imgCamera,
+                                              width: 50,
+                                              height: 50,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              AppStrings.cameraStr,
+                                              style: AppFonts.kPoppinsSemiBold.copyWith(fontSize: 14),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ]),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SvgPicture.asset(
+                            width: 20,
+                            height: 20,
+                            AppStrings.svgAttachment,
+                            color: Colors.black.withOpacity(0.15),
+                          ),
                         ),
                       ),
                       prefixIcon: Padding(
@@ -214,15 +348,14 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     width: 10,
                   ),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (messageController.text.trim().isNotEmpty) {
                         final position = controller.position.maxScrollExtent + 80;
                         controller.animateTo(position, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
-                        DataProvider.messageModel
-                            .add(MessageModel(messageController.text, "8.11 pm", AppStrings.svgCheckboxTik, AppStrings.imgProfile, true));
+                        controller.jumpTo(position);
+                        await FirebaseProvider.sendMessage(widget.chatModel, messageController.text.trim(), "text");
                         messageController.clear();
                       }
-                      setState(() {});
                     },
                     child: Container(
                       width: 50,
